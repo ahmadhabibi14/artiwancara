@@ -15,7 +15,7 @@ function isRequestInterview(data: any): data is RequestInterview {
   )
 }
 
-export const POST: import('@sveltejs/kit').RequestHandler = async ({ url, request }) => {
+export const POST: import('@sveltejs/kit').RequestHandler = async ({ request }) => {
   const data = await request.json() as RequestInterview;
   if (!isRequestInterview(data)) {
     const errorResp: ResponseHTTP = {

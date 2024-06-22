@@ -108,8 +108,8 @@
           <label for="" class="ml-2 text-sm">Jenis Pekerjaan:</label>
           <p class="text-xl font-bold">{jobLabel}</p>
         </div>
-        <div class="flex flex-col gap-2">
-          <label for="job_description" class="ml-2 text-sm">Deskripsi</label>
+        <div class="flex flex-col gap-1">
+          <label for="job_description" class="ml-2 text-sm flex flex-row gap-2 items-end">Deskripsi <span class="text-red-500 text-2xl !-mb-2">*</span></label>
           <textarea
             name="job_description"
             id="job_description"
@@ -119,8 +119,8 @@
               focus:outline focus:outline-violet-500 max-h-[160px] min-h-[75px]"
           ></textarea>
         </div>
-        <div class="flex flex-col gap-2">
-          <label for="job_responsibilities" class="ml-2 text-sm">Tanggung Jawab</label>
+        <div class="flex flex-col gap-1">
+          <label for="job_description" class="ml-2 text-sm flex flex-row gap-2 items-end">Tanggung Jawab <span class="text-red-500 text-2xl !-mb-2">*</span></label>
           <textarea
             name="job_responsibilities"
             id="job_responsibilities"
@@ -130,8 +130,8 @@
               focus:outline focus:outline-violet-500 resize-y max-h-[200px] min-h-[145px]"
           ></textarea>
         </div>
-        <div class="flex flex-col gap-2">
-          <label for="job_requirements" class="ml-2 text-sm">Persyaratan</label>
+        <div class="flex flex-col gap-1">
+          <label for="job_description" class="ml-2 text-sm flex flex-row gap-2 items-end">Persyaratan <span class="text-red-500 text-2xl !-mb-2">*</span></label>
           <textarea
             name="job_requirements"
             id="job_requirements"

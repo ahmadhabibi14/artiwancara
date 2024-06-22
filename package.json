@@ -27,6 +27,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@google-cloud/speech": "^6.6.0",
 		"@google/generative-ai": "^0.13.0",
 		"axios": "^1.7.2",
 		"svelte-french-toast": "^1.2.0",

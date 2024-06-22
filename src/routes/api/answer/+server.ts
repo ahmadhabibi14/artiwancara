@@ -1,18 +1,11 @@
-import { error, json } from '@sveltejs/kit';
+import { json } from '@sveltejs/kit';
+import { SpeechClient } from '@google-cloud/speech';
 
-export const POST: import('@sveltejs/kit').RequestHandler = ({ url }) => {
-  const min = Number(url.searchParams.get('min') ?? '0');
-  const max = Number(url.searchParams.get('max') ?? '1');
-	const d = max - min;
-
-	if (isNaN(d) || d < 0) {
-    error(400, 'min and max must be numbers, and min must be less than max');
-  }
-
-	const random = min + Math.random() * d;
+export const POST: import('@sveltejs/kit').RequestHandler = ({ request }) => {
+  const client = new SpeechClient();
 
   const resp: Object = {
-    'num': random
+    'num': 10000
   }
   
 	return json(resp);

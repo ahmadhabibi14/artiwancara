@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-  <title>Artiwancara</title>
+  <title>Artiwancara | Latihan wawancara dengan AI</title>
 </svelte:head>
 
 <main class="bg-white min-h-[100dvh]">
