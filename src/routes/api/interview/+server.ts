@@ -8,10 +8,10 @@ import { GOOGLE_GEMINI_API_KEY } from '$env/static/private'
 
 function isRequestInterview(data: any): data is RequestInterview {
   return (
-    data.job_name !== undefined &&
-    data.job_description !== undefined &&
-    data.job_responsibilities !== undefined &&
-    data.job_requirements !== undefined
+    !(data.job_name === undefined || data.job_name === '')&&
+    !(data.job_description === undefined || data.job_description === '') &&
+    !(data.job_responsibilities === undefined || data.job_responsibilities === '') &&
+    !(data.job_requirements === undefined || data.job_requirements === '')
   )
 }
 
@@ -20,7 +20,7 @@ export const POST: import('@sveltejs/kit').RequestHandler = async ({ url, reques
   if (!isRequestInterview(data)) {
     const errorResp: ResponseHTTP = {
       success: false,
-      errors: 'invalid data',
+      errors: 'Semua data tidak boleh kosong',
     }
     return new Response(
       JSON.stringify(errorResp),

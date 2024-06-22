@@ -10,7 +10,7 @@ export const Jobs: Job[] = [
   },
   {
     name: 'software-engineer',
-    label: 'Insinyur Perangkat Lunak',
+    label: 'Software Engineer',
   },
   {
     name: 'data-scientist',

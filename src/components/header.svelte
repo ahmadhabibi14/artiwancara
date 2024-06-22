@@ -11,9 +11,9 @@
         class="w-[160px] h-auto"
       />
     </a>
-    <div class="flex flex-row gap-3 items-center text-sm font-medium">
+    <div class="flex flex-row gap-4 items-center text-sm font-medium">
       <a class="hover:text-violet-500" href="/about">Tentang</a>
-      <a class="hover:text-violet-500" href="/terms">Syarat dan ketentuan</a>
+      <a class="hover:text-violet-500" href="/privacy-policy">Kebijakan Privasi</a>
       <a class="hover:text-violet-500" href="/contact">Kontak</a>
       <a class="hover:text-violet-500" href="/faq">FAQs</a>
     </div>
