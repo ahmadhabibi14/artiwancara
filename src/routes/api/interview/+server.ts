@@ -20,7 +20,7 @@ export const POST: import('@sveltejs/kit').RequestHandler = async ({ request }) 
   if (!isRequestInterview(data)) {
     const errorResp: ResponseHTTP = {
       success: false,
-      errors: 'Semua data tidak boleh kosong',
+      errors: 'Semua data harus terisi',
     }
     return new Response(
       JSON.stringify(errorResp),

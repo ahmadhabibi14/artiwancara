@@ -1,7 +1,7 @@
 <script lang="ts">
-
+  import { fade } from 'svelte/transition';
 </script>
 
-<div>
-  finish
-</div>
+<main transition:fade={{ delay: 250, duration: 300 }}>
+  Finished
+</main>

@@ -7,6 +7,7 @@
   import axios from 'axios';
   import toast, { Toaster } from 'svelte-french-toast';
   import { InterviewMode, InterviewState, InterviewQuestions } from '@/state/interview.js';
+  import { fade } from 'svelte/transition';
 
   let jobName: string             = Jobs[0].name || '';
   let jobLabel: string            = Jobs[0].label || '';
@@ -73,7 +74,22 @@
       name: 'Kalibrr',
       iconSrc: '/icons/kalibrr.png',
       url: 'https://www.kalibrr.id'
-    }
+    },
+    {
+      name: 'Glassdoor',
+      iconSrc: '/icons/glassdoor.png',
+      url: 'https://www.glassdoor.com'
+    },
+    {
+      name: 'Karir.com',
+      iconSrc: '/icons/karir-com.png',
+      url: 'https://karir.com'
+    },
+    {
+      name: 'Karirhub Kemnaker',
+      iconSrc: '/icons/karirhub-kemnaker.svg',
+      url: 'https://karirhub.kemnaker.go.id'
+    },
   ]
 </script>
 
@@ -83,7 +99,7 @@
 
 <Toaster />
 
-<main class="bg-white min-h-[100dvh]">
+<main class="bg-white min-h-[100dvh] relative" transition:fade={{ delay: 250, duration: 300 }}>
   <div class="flex flex-row mx-auto w-full justify-evenly">
     <section class="flex flex-col gap-7 justify-center w-6/12">
       <header class="flex flex-col gap-6 max-w-[500px]">
@@ -156,7 +172,7 @@
         />
       </button>
     </section>
-    <section class="w-4/12 flex flex-col gap-6">
+    <section class="w-5/12 flex flex-col gap-6">
       <header class="flex flex-col gap-2">
         <h1 class="text-3xl font-bold">Cari lowongan...</h1>
         <p>Tips! untuk memudahkanmu, carilah lowongan pekerjaan di platform - platform pencarian kerja seperti berikut. Kemudian salin deskripsi, tanggung jawab, dan persyaratan pekerjaan ke form untuk memuat pertanyaan</p>
@@ -165,7 +181,8 @@
         {#each (platforms || []) as platform}
           <a
             href={platform.url}
-            class="py-3 px-5 bg-white border border-zinc-200 rounded-lg">
+            target="_blank"
+            class="py-3 px-5 bg-white border border-zinc-200 hover:border-zinc-400 rounded-lg">
             <img
               src={platform.iconSrc}
               alt={platform.name}
@@ -176,4 +193,70 @@
       </div>
     </section>
   </div>
+  {#if isSubmitted}
+    <div class="w-full h-full bg-white/80 absolute top-0" transition:fade={{ delay: 250, duration: 300 }}>
+      <animation class="dots-container">
+        <dot class="dot"></dot>
+        <dot class="dot"></dot>
+        <dot class="dot"></dot>
+        <dot class="dot"></dot>
+        <dot class="dot"></dot>
+      </animation>  
+    </div>
+  {/if}
 </main>
+
+<style>
+  .dots-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+  }
+
+  .dot {
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+    border-radius: 10px;
+    background-color: #b3d4fc;
+    animation: pulse 1.5s infinite ease-in-out;
+  }
+
+  .dot:last-child {
+    margin-right: 0;
+  }
+
+  .dot:nth-child(1) {
+    animation-delay: -0.3s;
+  }
+
+  .dot:nth-child(2) {
+    animation-delay: -0.1s;
+  }
+
+  .dot:nth-child(3) {
+    animation-delay: 0.1s;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(0.8);
+      background-color: #c4b5fd;
+      box-shadow: 0 0 0 0 rgba(196, 181, 253, 0.7);
+    }
+
+    50% {
+      transform: scale(1.2);
+      background-color: #8B5CF6;
+      box-shadow: 0 0 0 10px rgba(139, 92, 246, 0);
+    }
+
+    100% {
+      transform: scale(0.8);
+      background-color: #c4b5fd;
+      box-shadow: 0 0 0 0 rgba(196, 181, 253, 0.7);
+    }
+  }
+</style>
