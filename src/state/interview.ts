@@ -8,3 +8,5 @@ export const InterviewMode: Writable<InterviewState> = writable(InterviewState.I
 export const InterviewQuestions: Writable<string[]> = writable([]);
 
 export const JobName: Writable<string> = writable('custom');
+
+export const Grade: Writable<number> = writable(0);

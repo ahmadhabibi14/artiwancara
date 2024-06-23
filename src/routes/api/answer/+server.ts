@@ -63,31 +63,33 @@ export const POST: import('@sveltejs/kit').RequestHandler = async ({ request }) 
     }
   }
 
-  const transcription: Promise<string> = await speechClient.recognize(reqSpeechToText)
-    .then((data: any) => {
-      const s = data[0].results.map((r: { alternatives: { transcript: any; }[]; }) => r.alternatives[0].transcript).join("\n");
-      return s;
-    }).catch(error => {
-      console.error(error);
-      const errorResp: ResponseHTTP = {
-        success: false,
-        errors: 'Gagal membaca rekaman suara. Coba lagi nanti',
-      }
-      return new Response(
-        JSON.stringify(errorResp),
-        {
-          status: HttpStatusCode.BadRequest,
-          headers: {
-            'Content-Type': 'application/json'
-          }
+  let transcription: string;
+  try {
+    const [operation] = await speechClient.longRunningRecognize(reqSpeechToText);
+    const [response] = await operation.promise();
+    // @ts-ignore
+    transcription = response.results.map(result => result.alternatives[0].transcript).join('\n');
+  } catch (error) {
+    console.error(error);
+    const errorResp: ResponseHTTP = {
+      success: false,
+      errors: 'Gagal membaca rekaman suara. Coba lagi nanti',
+    }
+    return new Response(
+      JSON.stringify(errorResp),
+      {
+        status: HttpStatusCode.BadRequest,
+        headers: {
+          'Content-Type': 'application/json'
         }
-      );
-    });
+      }
+    );
+  }
 
   const data: RequestAnswer = {
     job_name: jobName,
     question: question,
-    answer: await transcription
+    answer: transcription
   }
 
   const genAI: GoogleGenerativeAI = new GoogleGenerativeAI(GOOGLE_GEMINI_API_KEY);
@@ -105,7 +107,7 @@ export const POST: import('@sveltejs/kit').RequestHandler = async ({ request }) 
     errors: '',
     ai_answer: answerAndGrade[0],
     grade: Number(answerAndGrade[1]),
-    user_answer: await transcription
+    user_answer: transcription
   }
 
   return json(respJson);

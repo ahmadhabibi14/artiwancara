@@ -1,23 +1,15 @@
 <script lang="ts">
   import { fade } from 'svelte/transition';
-  import { InterviewQuestions, InterviewMode, InterviewState, JobName } from '@/state/interview.js';
+  import { InterviewQuestions, InterviewMode, InterviewState, JobName, Grade } from '@/state/interview.js';
   import axios from 'axios';
   import toast, { Toaster } from 'svelte-french-toast';
   import { Icon } from 'svelte-icons-pack';
   import { RiMediaMicLine, RiArrowsArrowLeftLine, RiDesignSquareFill } from 'svelte-icons-pack/ri';
   import TypeWriter from 'svelte-typewriter';
+  import { type ResponseAnswer } from '@/types/response.js';
 
   const qqq: string[] = [
-    "Ceritakan tentang proyek pengembangan software yang Anda banggakan dan peran Anda di dalamnya. Apa tantangan yang Anda hadapi dan bagaimana Anda mengatasinya?",
-    "Jelaskan bagaimana Anda mendekati proses debugging kode JavaScript. Apa strategi yang Anda gunakan untuk menemukan dan menyelesaikan bug?",
-    "Bagaimana Anda memastikan bahwa kode yang Anda tulis efisien dan mudah dipelihara?",
     "Apa pengalaman Anda dalam bekerja dengan sistem kontrol versi seperti Git? Bagaimana Anda menggunakannya dalam tim pengembangan?",
-    "Jelaskan bagaimana Anda mengelola prioritas dan tugas dalam proyek pengembangan software yang kompleks?",
-    "Apa pemahaman Anda tentang prinsip-prinsip SOLID dalam pengembangan software?",
-    "Bagaimana Anda berkolaborasi dengan anggota tim lain dalam proses pengembangan software? Berikan contoh.",
-    "Apa bahasa pemrograman favorit Anda dan mengapa? Apa yang membuat bahasa tersebut menarik bagi Anda?",
-    "Apa yang Anda ketahui tentang metodologi pengembangan software seperti Agile atau Scrum? Bagaimana Anda menerapkannya dalam pekerjaan Anda?",
-    "Bagaimana Anda terus belajar dan meningkatkan keterampilan pengembangan software Anda? Apa sumber belajar yang Anda gunakan?"
   ];
 
   InterviewQuestions.set(qqq);
@@ -28,6 +20,7 @@
 
   let currentQuestion: string = $InterviewQuestions[0] || '';
   let currentQuestionNumber: number = 1;
+  let totalAnsweredQuestion: number = 0;
 
   enum inputType { Voice, Text }
   let Input: inputType = inputType.Voice;
@@ -37,8 +30,8 @@
   let audioBlob: Blob;
 
   // Response from AI
-  let Feedback: string = '';
-  let Rekomendasi: string = '';
+  let JawabanUser: string = '';
+  let RekomendasiAI: string = '';
 
   let isRecording: boolean = false;
   let isFinishedRecording: boolean = false;
@@ -61,12 +54,9 @@
       isRecording = true;
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       mediaRecorder = new MediaRecorder(stream);
+
       mediaRecorder.start();
-
-      mediaRecorder.ondataavailable = (event) => {
-        audioChunks.push(event.data);
-      };
-
+      mediaRecorder.ondataavailable = (event) => audioChunks.push(event.data);
       mediaRecorder.onstop = () => {
         audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
         audioChunks = [];
@@ -88,8 +78,10 @@
   const resetRecording = () => {
     isRecording = false;
     isFinishedRecording = false;
-    Feedback = '';
-    Rekomendasi = '';
+    isAnsweredByAI = false;
+
+    RekomendasiAI = '';
+    JawabanUser = '';
 
     currentTime = 0;
     timer = '0:00';
@@ -105,7 +97,9 @@
     }
   }
 
+  let isSubmitted: boolean = false;
   const submitAnswer = async () => {
+    isSubmitted = true;
     const formData: FormData = new FormData();
     formData.append('audio', audioBlob);
     formData.append('question', currentQuestion);
@@ -116,11 +110,22 @@
         'Content-Type': 'multipart/form-data'
       }
     }).then((res) => {
-      console.log('Res', res);
-      isAnsweredByAI = true;
+      const data: ResponseAnswer = res.data as ResponseAnswer;
+      if (!data.success) {
+        toast.error(data.errors);
+      } else {
+        isAnsweredByAI = true;
+        RekomendasiAI = data.ai_answer;
+        JawabanUser = data.user_answer;
+        $Grade += data.grade;
+        totalAnsweredQuestion++
+      }
+      
     }).catch((err) => {
       console.log('Err', err);
       toast.error(err.response.data.errors);
+    }).finally(() => {
+      isSubmitted = false;
     });
   }
 </script>
@@ -142,8 +147,13 @@
         <span>Pertanyaan</span>
         <span><span class="text-violet-500 font-semibold">{currentQuestionNumber}</span> / <span class="text-violet-500 font-semibold">{$InterviewQuestions.length}</span></span>
       </div>
-      <button class="cursor-pointer flex flex-row gap-2 text-sm py-1 px-3 border border-red-400/10
-        bg-red-400/10 hover:bg-red-400/20 text-red-500 rounded-full">
+      <button
+        on:click={() => InterviewMode.set(InterviewState.Finished)}
+        disabled={totalAnsweredQuestion === 0}
+        class="cursor-pointer flex flex-row gap-2 text-sm py-1 px-3 border border-red-400/10
+        bg-red-400/10 hover:bg-red-400/20 text-red-500 rounded-full
+          disabled:bg-zinc-100 disabled:border-zinc-200 disabled:text-zinc-700 disabled:cursor-not-allowed
+        ">
         <span>Akhiri dan Tinjau</span>
       </button>
     </div>
@@ -151,56 +161,68 @@
       <div class="flex flex-col gap-7 p-5 border-b border-zinc-300">
         <h3 class="text-xl text-center font-bold">{currentQuestion}</h3>
         {#if Input === inputType.Voice}
-          <div class="flex flex-col gap-7 justify-center items-center">
-            <span class="text-5xl font-semibold text-zinc-400/80">{timer} / 3:00</span>
-            <button class="relative flex justify-center items-center" on:click={toggleRecording} disabled={isFinishedRecording}>
-              <div class="p-4 bg-violet-500 hover:bg-violet-400 {isFinishedRecording ? 'bg-violet-400 cursor-not-allowed' : ''} rounded-full z-20">
-                <Icon
-                  className="fill-white"
-                  size="22"
-                  src={isRecording ? RiDesignSquareFill : RiMediaMicLine}
-                />
+          <div class="relative flex flex-col gap-7 justify-center items-center">
+            {#if !isAnsweredByAI}
+              <span class="text-5xl font-semibold text-zinc-400/80">{timer} / 3:00</span>
+              <button class="relative flex justify-center items-center" on:click={toggleRecording} disabled={isFinishedRecording}>
+                <div class="p-4 bg-violet-500 hover:bg-violet-400 {isFinishedRecording ? 'bg-violet-400 cursor-not-allowed' : ''} rounded-full z-20">
+                  <Icon
+                    className="fill-white"
+                    size="22"
+                    src={isRecording ? RiDesignSquareFill : RiMediaMicLine}
+                  />
+                </div>
+                {#if isRecording}
+                  <div class="mic-on"></div>
+                {/if}
+              </button>
+            {/if}
+            {#if isSubmitted}
+              <div class="w-full h-full bg-white absolute top-0 z-30" transition:fade={{ delay: 250, duration: 300 }}>
+                <animation class="dots-container">
+                  <dot class="dot"></dot>
+                  <dot class="dot"></dot>
+                  <dot class="dot"></dot>
+                  <dot class="dot"></dot>
+                  <dot class="dot"></dot>
+                </animation>  
               </div>
-              {#if isRecording}
-                <div class="mic-on"></div>
-              {/if}
-            </button>
+            {/if}
             {#if isFinishedRecording}
               {#if !isAnsweredByAI}
                 <div class="flex flex-row justify-center gap-3 items-center">
                   <button
                     on:click={submitAnswer}
-                    class="py-1 px-3 rounded-full bg-violet-500 hover:bg-violet-400 text-white"
+                    class="py-2 px-4 rounded-full bg-violet-500 hover:bg-violet-400 text-white"
                   >Sumit untuk Feedback</button>
                   <button
                     on:click={resetRecording}
-                    class="py-1 px-3 rounded-full bg-emerald-400/20 hover:bg-emerald-400/30 text-emerald-600"
+                    class="py-2 px-4 rounded-full bg-emerald-400/20 hover:bg-emerald-400/30 text-emerald-600"
                   >Ulangi</button>
                 </div>
               {/if}
               {#if isAnsweredByAI}
+                {#if JawabanUser !== ''}
+                  <TypeWriter cursor={false}>
+                    <p class="text-zinc-500 text-center">{JawabanUser}</p>
+                  </TypeWriter>
+                {/if}
                 <button
                   on:click={nextQuestion}
-                  class="py-1 px-3 rounded-full bg-violet-500 text-white"
-                >Lanjut</button>
+                  class="py-2 px-4 rounded-full bg-violet-500 hover:bg-violet-400 text-white"
+                >
+                  {currentQuestionNumber < $InterviewQuestions.length ? 'Petanyaan Selanjutnya' : 'Selesai'}
+                </button>
               {/if}
             {/if}
           </div>
         {/if}
       </div>
-      <div class="bg-zinc-100 py-4 px-4 text-zinc-600 flex flex-col">
-        <p>Feedback :</p>
-        {#if Feedback !== ''}
+      <div class="bg-zinc-100 py-4 px-4 text-zinc-600 flex flex-col gap-2">
+        <p class="text-sm">Rekomendasi Jawaban dari AI :</p>
+        {#if RekomendasiAI !== ''}
           <TypeWriter cursor={false}>
-            <p>{Feedback}</p>
-          </TypeWriter>
-        {/if}
-      </div>
-      <div class="bg-zinc-100 py-4 px-4 text-zinc-600 flex flex-col border-t border-zinc-300">
-        <p>Rekomendasi Jawaban :</p>
-        {#if Rekomendasi !== ''}
-          <TypeWriter cursor={false}>
-            <p>{Rekomendasi}</p>
+            <p>{RekomendasiAI}</p>
           </TypeWriter>
         {/if}
       </div>
@@ -232,5 +254,58 @@
       width: 65px;
       height: 65px;
     }
-}
+  }
+
+  .dots-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+  }
+
+  .dot {
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+    border-radius: 10px;
+    background-color: #b3d4fc;
+    animation: pulse 1.5s infinite ease-in-out;
+  }
+
+  .dot:last-child {
+    margin-right: 0;
+  }
+
+  .dot:nth-child(1) {
+    animation-delay: -0.3s;
+  }
+
+  .dot:nth-child(2) {
+    animation-delay: -0.1s;
+  }
+
+  .dot:nth-child(3) {
+    animation-delay: 0.1s;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(0.8);
+      background-color: #c4b5fd;
+      box-shadow: 0 0 0 0 rgba(196, 181, 253, 0.7);
+    }
+
+    50% {
+      transform: scale(1.2);
+      background-color: #8B5CF6;
+      box-shadow: 0 0 0 10px rgba(139, 92, 246, 0);
+    }
+
+    100% {
+      transform: scale(0.8);
+      background-color: #c4b5fd;
+      box-shadow: 0 0 0 0 rgba(196, 181, 253, 0.7);
+    }
+  }
 </style>
