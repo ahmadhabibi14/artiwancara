@@ -51,6 +51,9 @@ importers:
       svelte-check:
         specifier: ^3.6.0
         version: 3.8.1(postcss-load-config@4.0.2(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.18)
+      svelte-typewriter:
+        specifier: ^3.2.3
+        version: 3.2.3(svelte@4.2.18)
       tailwindcss:
         specifier: ^3.4.4
         version: 3.4.4
@@ -217,6 +220,15 @@ packages:
 
   '@fontsource/lato@5.0.21':
     resolution: {integrity: sha512-UubLwvJO2bKuhWv6+ocx2Bou/pPIT6q7VpYaHIW7ZDaLPQY3uYAhveJg6P7Lvz5HYHyLba8JUc3yP7wvcqA8zQ==}
+
+  '@formatjs/ecma402-abstract@2.0.0':
+    resolution: {integrity: sha512-rRqXOqdFmk7RYvj4khklyqzcfQl9vEL/usogncBHRZfZBDOwMGuSRNFl02fu5KGHXdbinju+YXyuR+Nk8xlr/g==}
+
+  '@formatjs/intl-localematcher@0.5.4':
+    resolution: {integrity: sha512-zTwEpWOzZ2CiKcB93BLngUX59hQkuZjT2+SAQEscSm52peDW/getsawMcWF1rGRpMCX6D7nSJA3CzJ8gn13N/g==}
+
+  '@formatjs/intl-segmenter@11.5.7':
+    resolution: {integrity: sha512-MPvUKOURPY1aHc/d3YtLKp4hamrJtdBRc/AZVt9zRitrNeRszSwpIIYDHka9chQJTRIJlIfS4S9FGMdA1PE3Xw==}
 
   '@google-cloud/common@5.0.2':
     resolution: {integrity: sha512-V7bmBKYQyu0eVG2BFejuUjlBt+zrya6vtsKdY+JxMM/dNntPF41vZ9+LhOshEUH01zOHEqBSvI7Dad7ZS6aUeA==}
@@ -1286,6 +1298,11 @@ packages:
       typescript:
         optional: true
 
+  svelte-typewriter@3.2.3:
+    resolution: {integrity: sha512-762k01kIU+IyXfe5f2MEYQ1yIfJZfueAEmJNbO36cxJG56/vciHiWacPQLnSECK/4cvlH/Ll1Mv6B45InMJ1zg==}
+    peerDependencies:
+      svelte: '>=3.47.x'
+
   svelte-writable-derived@3.1.1:
     resolution: {integrity: sha512-w4LR6/bYZEuCs7SGr+M54oipk/UQKtiMadyOhW0PTwAtJ/Ai12QS77sLngEcfBx2q4H8ZBQucc9ktSA5sUGZWw==}
     peerDependencies:
@@ -1524,6 +1541,21 @@ snapshots:
     optional: true
 
   '@fontsource/lato@5.0.21': {}
+
+  '@formatjs/ecma402-abstract@2.0.0':
+    dependencies:
+      '@formatjs/intl-localematcher': 0.5.4
+      tslib: 2.6.3
+
+  '@formatjs/intl-localematcher@0.5.4':
+    dependencies:
+      tslib: 2.6.3
+
+  '@formatjs/intl-segmenter@11.5.7':
+    dependencies:
+      '@formatjs/ecma402-abstract': 2.0.0
+      '@formatjs/intl-localematcher': 0.5.4
+      tslib: 2.6.3
 
   '@google-cloud/common@5.0.2':
     dependencies:
@@ -2618,6 +2650,11 @@ snapshots:
       postcss: 8.4.38
       postcss-load-config: 4.0.2(postcss@8.4.38)
       typescript: 5.5.2
+
+  svelte-typewriter@3.2.3(svelte@4.2.18):
+    dependencies:
+      '@formatjs/intl-segmenter': 11.5.7
+      svelte: 4.2.18
 
   svelte-writable-derived@3.1.1(svelte@4.2.18):
     dependencies:

@@ -99,7 +99,7 @@
 
 <Toaster />
 
-<main class="bg-white min-h-[100dvh] relative" transition:fade={{ delay: 250, duration: 300 }}>
+<main class="relative" transition:fade={{ delay: 250, duration: 300 }}>
   <div class="flex flex-row mx-auto w-full justify-evenly">
     <section class="flex flex-col gap-7 justify-center w-6/12">
       <header class="flex flex-col gap-6 max-w-[500px]">
@@ -159,7 +159,7 @@
         </div>
       </div>
       <button
-        on:click={Start}
+        on:click|preventDefault={() => InterviewMode.set(InterviewState.Answer)}
         disabled={isSubmitted}
         class="mt-3 w-fit bg-violet-500 hover:bg-violet-600 disabled:bg-violet-400
         text-white py-2 px-5 rounded-full mx-auto flex flex-row gap-2 items-center group"

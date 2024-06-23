@@ -1,4 +1,43 @@
 <script lang="ts">
+  import axios from 'axios';
+  let mediaRecorder: MediaRecorder;
+  let audioChunks: Blob[] = [];
+  let audioBlob: Blob;
+  let audioUrl: string | null = null;
+  let isRecording: boolean = false;
+
+  async function startRecording() {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorder = new MediaRecorder(stream);
+    mediaRecorder.start();
+
+    mediaRecorder.ondataavailable = (event) => {
+      audioChunks.push(event.data);
+    };
+
+    mediaRecorder.onstop = () => {
+      audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+      audioUrl = URL.createObjectURL(audioBlob);
+      audioChunks = [];
+    };
+
+    isRecording = true;
+  }
+
+  function stopRecording() {
+    mediaRecorder.stop();
+    isRecording = false;
+  }
+
+  async function sendAudio() {
+    const formData = new FormData();
+    formData.append('audio', audioBlob, 'recording.webm');
+    await axios.post('/api/debug', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+  }
 </script>
 
 <svelte:head>
@@ -7,67 +46,8 @@
 
 <main class="bg-white min-h-[100dvh]">
   <div>
-    <section class="dots-container">
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
-    </section>    
+    <button class="py-2 px-5 bg-violet-500 text-white" on:click={startRecording} disabled={isRecording}>Start Recording</button>
+    <button class="py-2 px-5 bg-violet-500 text-white" on:click={stopRecording} disabled={!isRecording}>Stop Recording</button>
+    <button class="py-2 px-5 bg-violet-500 text-white" on:click={sendAudio} disabled={!audioBlob}>Send Audio</button> 
   </div>
 </main>
-
-<style>
-  .dots-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-}
-
-.dot {
-  height: 20px;
-  width: 20px;
-  margin-right: 10px;
-  border-radius: 10px;
-  background-color: #b3d4fc;
-  animation: pulse 1.5s infinite ease-in-out;
-}
-
-.dot:last-child {
-  margin-right: 0;
-}
-
-.dot:nth-child(1) {
-  animation-delay: -0.3s;
-}
-
-.dot:nth-child(2) {
-  animation-delay: -0.1s;
-}
-
-.dot:nth-child(3) {
-  animation-delay: 0.1s;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(0.8);
-    background-color: #b3d4fc;
-    box-shadow: 0 0 0 0 rgba(178, 212, 252, 0.7);
-  }
-
-  50% {
-    transform: scale(1.2);
-    background-color: #6793fb;
-    box-shadow: 0 0 0 10px rgba(178, 212, 252, 0);
-  }
-
-  100% {
-    transform: scale(0.8);
-    background-color: #b3d4fc;
-    box-shadow: 0 0 0 0 rgba(178, 212, 252, 0.7);
-  }
-}
-</style>
