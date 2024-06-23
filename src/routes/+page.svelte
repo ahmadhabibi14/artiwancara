@@ -74,7 +74,7 @@
               class="w-11 h-11 rounded-full -ml-2 border-[2px] border-white"
             />
           </div>
-          <div class="text-sm text-zinc-600">
+          <div class="text-sm text-zinc-600 flex flex-col gap-1.5">
             <div class="flex flex-row text-sm">
               {#each Array(5) as _}
                 <Icon
@@ -88,8 +88,8 @@
           </div>
         </div>
       </div>
-      <div class="flex flex-row justify-center items-center gap-4">
-        <div class="flex flex-col items-center justify-center gap-2 py-4 px-8 bg-pink-400/20 text-pink-600 rounded-lg text-sm">
+      <div class="flex flex-row justify-center items-stretch gap-4">
+        <div class="flex flex-col items-center justify-center gap-2 py-4 px-8 bg-pink-400/20 text-pink-600 rounded-lg text-sm h-auto">
           <Icon
             className=""
             size="30"
@@ -97,15 +97,15 @@
           />
           <span>Gratis</span>
         </div>
-        <div class="flex flex-col items-center justify-center gap-2 p-4 bg-amber-400/20 text-amber-600 rounded-lg text-sm">
+        <div class="flex flex-col items-center justify-center gap-2 p-4 bg-amber-400/20 text-amber-600 rounded-lg text-sm h-auto">
           <Icon
             className=""
             size="30"
             src={RiUserFacesUserLine}
           />
-          <span>User friedly</span>
+          <span>Ramah Pengguna</span>
         </div>
-        <div class="flex flex-col items-center justify-center gap-2 p-4 bg-blue-400/20 text-blue-600 rounded-lg text-sm">
+        <div class="flex flex-col items-center justify-center gap-2 p-4 bg-blue-400/20 text-blue-600 rounded-lg text-sm h-auto">
           <Icon
             className=""
             size="30"
@@ -113,7 +113,7 @@
           />
           <span>Terpercaya</span>
         </div>
-        <div class="flex flex-col items-center justify-center gap-2 p-4 bg-emerald-400/20 text-emerald-600 rounded-lg text-sm">
+        <div class="flex flex-col items-center justify-center gap-2 p-4 bg-emerald-400/20 text-emerald-600 rounded-lg text-sm h-auto">
           <Icon
             className=""
             size="30"
