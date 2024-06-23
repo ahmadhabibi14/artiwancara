@@ -33,6 +33,22 @@ export const POST: import('@sveltejs/kit').RequestHandler = async ({ request }) 
     );
   }
 
+  if (!GOOGLE_GEMINI_API_KEY) {
+    const errorResp: ResponseHTTP = {
+      success: false,
+      errors: 'Gagal membuat permintaan ke AI. Coba lagi nanti',
+    }
+    return new Response(
+      JSON.stringify(errorResp),
+      {
+        status: HttpStatusCode.InternalServerError,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+  }
+
   const genAI = new GoogleGenerativeAI(GOOGLE_GEMINI_API_KEY);
   const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash'});
 
@@ -40,11 +56,27 @@ export const POST: import('@sveltejs/kit').RequestHandler = async ({ request }) 
   const result = await model.generateContent(prompt);
   const response = await result.response;
   const text = response.text();
+
+  if (!text || text === '') {
+    const errorResp: ResponseHTTP = {
+      success: false,
+      errors: 'Gagal membuat permintaan ke AI. Coba lagi nanti',
+    }
+    return new Response(
+      JSON.stringify(errorResp),
+      {
+        status: HttpStatusCode.InternalServerError,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+  }
   
   const resp: ResponseInterview = {
     success: true,
     errors: '',
-    questions: (text.split('-')).filter((_, i) => i !== 0),
+    questions: JSON.parse(text.replace(/^```javascript\n|\n``` \n$/g, '')),
   }
 
 	return json(resp);

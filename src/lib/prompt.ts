@@ -23,8 +23,15 @@ ${req.job_responsibilities}
 Persyaratan:
 ${req.job_requirements}
 
-Buatlah jawaban dalam bahasa Indonesia, dan pisahkan tiap jawaban dengan tanda (-).
-Langsung saja jawab dengan pertanyaan - pertanyaan yang dibutuhkan, dan maksimal 10 pertanyaan.
+Buatlah jawaban dalam bahasa Indonesia, dan maksimal 10 pertanyaan.
+Tuliskan pertanyaan pertanyaanya dalam bentuk array javascript,
+supaya saya bisa memanfaatkannya di pemrograman, langsung saja jawab seperti berikut:
+[
+  "pertanyaan 1",
+  "pertanyaan 2
+]
+
+Tanpa berbasa basi, langsung jawab seperti cara diatas.
 `
   return prompt;
 }
