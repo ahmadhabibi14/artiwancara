@@ -6,7 +6,7 @@
   import type { ResponseHTTP, ResponseInterview } from '@/types/response.js';
   import axios from 'axios';
   import toast, { Toaster } from 'svelte-french-toast';
-  import { InterviewMode, InterviewState, InterviewQuestions } from '@/state/interview.js';
+  import { InterviewMode, InterviewState, InterviewQuestions, JobName } from '@/state/interview.js';
   import { fade } from 'svelte/transition';
 
   let jobName: string             = Jobs[0].name || '';
@@ -18,6 +18,7 @@
   const changeJob = (job: Job) => {
     jobLabel = job.label;
     jobName = job.name;
+    JobName.set(jobName);
   }
 
   let isSubmitted: boolean = false;

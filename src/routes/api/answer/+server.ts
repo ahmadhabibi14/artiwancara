@@ -1,31 +1,112 @@
+import type { ResponseHTTP } from '@/types/response.js';
 import { json } from '@sveltejs/kit';
-import { promises as fs } from 'fs';
-import path from 'path';
+import { HttpStatusCode } from 'axios';
+import { GENPROMPT_InterviewAnswer } from '@/lib/prompt.js';
+import { SpeechClient } from '@google-cloud/speech';
+import { GoogleGenerativeAI, type GenerativeModel, type GenerateContentResult } from '@google/generative-ai';
+import { GOOGLE_GEMINI_API_KEY } from '$env/static/private';
+import { type RequestAnswer } from '@/types/request.js';
+import { type ResponseAnswer } from '@/types/response.js';
 
-const uploadDir = path.join(process.cwd(), 'uploads');
+process.env.GOOGLE_APPLICATION_CREDENTIALS = './google-credentials.json';
 
 export const POST: import('@sveltejs/kit').RequestHandler = async ({ request }) => {
-  try {
-    await fs.mkdir(uploadDir, { recursive: true });
+  const formData = await request.formData();
+  const audioFile = formData.get('audio') as File;
+  const jobName = formData.get('job_name') as string;
+  const question = formData.get('question') as string;
 
-    const formData = await request.formData();
-    const audioFile = formData.get('audio') as File;
+  if (!audioFile) {
+    const errorResp: ResponseHTTP = {
+      success: false,
+      errors: 'Tidak ada rekaman suara',
+    }
+    return new Response(
+      JSON.stringify(errorResp),
+      {
+        status: HttpStatusCode.BadRequest,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+  }
 
-    if (!audioFile) {
+  if (!question || question === '') {
+    const errorResp: ResponseHTTP = {
+      success: false,
+      errors: 'Tidak ada pertanyaan',
+    }
+    return new Response(
+      JSON.stringify(errorResp),
+      {
+        status: HttpStatusCode.BadRequest,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+  }
+
+  console.log('Audio file:', new Uint8Array(await audioFile.arrayBuffer()));
+
+  const speechClient = new SpeechClient();
+
+  const reqSpeechToText: any = {
+    audio: {
+      content: new Uint8Array(await audioFile.arrayBuffer())
+    },
+    config: {
+      encoding: 'WEBM_OPUS',
+      sampleRateHertz: 48000,
+      languageCode: 'id-ID',
+    }
+  }
+
+  const transcription: Promise<string> = await speechClient.recognize(reqSpeechToText)
+    .then((data: any) => {
+      const s = data[0].results.map((r: { alternatives: { transcript: any; }[]; }) => r.alternatives[0].transcript).join("\n");
+      return s;
+    }).catch(error => {
+      console.error(error);
+      const errorResp: ResponseHTTP = {
+        success: false,
+        errors: 'Gagal membaca rekaman suara. Coba lagi nanti',
+      }
       return new Response(
-        'No audio file ',
+        JSON.stringify(errorResp),
         {
-          status: 400
+          status: HttpStatusCode.BadRequest,
+          headers: {
+            'Content-Type': 'application/json'
+          }
         }
       );
-    }
+    });
 
-    const filePath = path.join(uploadDir, audioFile.name);
-    await fs.writeFile(filePath, Buffer.from(await audioFile.arrayBuffer()));
-
-    return new Response('Audio uploaded successfully', { status: 200 });
-  } catch (error) {
-    console.error(error);
-    return new Response('Failed to upload audio', { status: 500 });
+  const data: RequestAnswer = {
+    job_name: jobName,
+    question: question,
+    answer: await transcription
   }
+
+  const genAI: GoogleGenerativeAI = new GoogleGenerativeAI(GOOGLE_GEMINI_API_KEY);
+  const model: GenerativeModel = genAI.getGenerativeModel({ model: 'gemini-1.5-flash'});
+
+  const prompt: string = GENPROMPT_InterviewAnswer(data);
+  const result: GenerateContentResult = await model.generateContent(prompt);
+  const response = await result.response;
+  const text: string = response.text();
+  
+  const answerAndGrade: string[] = JSON.parse(text.replace(/^```javascript\n|\n``` \n$/g, ''));
+
+  const respJson: ResponseAnswer = {
+    success: true,
+    errors: '',
+    ai_answer: answerAndGrade[0],
+    grade: Number(answerAndGrade[1]),
+    user_answer: await transcription
+  }
+
+  return json(respJson);
 };

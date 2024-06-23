@@ -6,3 +6,5 @@ export enum InterviewState {
 export const InterviewMode: Writable<InterviewState> = writable(InterviewState.Initial);
 
 export const InterviewQuestions: Writable<string[]> = writable([]);
+
+export const JobName: Writable<string> = writable('custom');
