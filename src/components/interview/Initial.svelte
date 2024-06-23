@@ -8,6 +8,7 @@
   import toast, { Toaster } from 'svelte-french-toast';
   import { InterviewMode, InterviewState, InterviewQuestions, JobName } from '@/state/interview.js';
   import { fade } from 'svelte/transition';
+  import { tooltip } from '@svelte-plugins/tooltips';
 
   let jobName: string             = Jobs[0].name || '';
   let jobLabel: string            = Jobs[0].label || '';
@@ -181,6 +182,7 @@
       <div class="flex gap-2 flex-wrap">
         {#each (platforms || []) as platform}
           <a
+            use:tooltip={{ content: platform.name }}
             href={platform.url}
             target="_blank"
             class="py-3 px-5 bg-white border border-zinc-200 hover:border-zinc-400 rounded-lg">

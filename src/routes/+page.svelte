@@ -1,6 +1,7 @@
 <script lang="ts">
   import { Icon } from 'svelte-icons-pack';
-  import { RiArrowsArrowRightLine } from 'svelte-icons-pack/ri';
+  import { RiArrowsArrowRightLine, RiUserFacesUserLine, RiSystemLock2Line, RiSystemStarFill  } from 'svelte-icons-pack/ri';
+  import { FiThumbsUp } from 'svelte-icons-pack/fi';
   import { fade } from 'svelte/transition';
   import { SITE_NAME, SITE_URL, SITE_DESCRIPTION, SITE_OG_IMG_URL } from '@/lib/constants.js';
 
@@ -47,31 +48,91 @@
       </section>
       <div class="container"></div>
     </div>
+    <div class="flex flex-row gap-4 justify-between cursor-default">
+      <div class="flex flex-col gap-4">
+        <div class="flex justify-center items-center font-bold gap-2">
+          <span class="text-blue-600 text-3xl">#1</span>
+          <span class="text-xl">Platform Interview AI terbaik di Indonesia</span>
+        </div>
+        <div class="flex flex-row gap-4 items-center">
+          <div class="flex flex-row">
+            <img
+              src="/img/person-1.png"
+              alt=""
+              class="w-11 h-11 rounded-full border-[2px] border-white"
+            />
+            <img
+              src="/img/person-2.png"
+              alt=""
+              class="w-11 h-11 rounded-full -ml-2 border-[2px] border-white"
+            />
+            <img
+              src="/img/person-3.png"
+              alt=""
+              class="w-11 h-11 rounded-full -ml-2 border-[2px] border-white"
+            />
+          </div>
+          <div class="text-sm text-zinc-600">
+            <div class="flex flex-row text-sm">
+              {#each Array(5) as _}
+                <Icon
+                  className="fill-amber-500"
+                  size="15"
+                  src={RiSystemStarFill}
+                />
+              {/each}
+            </div>
+            <p>Dipercaya 17,000+ pencari kerja</p>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-row justify-center items-center gap-6">
+        <div class="flex flex-col items-center justify-center gap-2 p-4 bg-amber-400/20 text-amber-600 rounded-lg text-sm">
+          <Icon
+            className=""
+            size="30"
+            src={RiUserFacesUserLine}
+          />
+          <span>User friedly</span>
+        </div>
+        <div class="flex flex-col items-center justify-center gap-2 p-4 bg-blue-400/20 text-blue-600 rounded-lg text-sm">
+          <Icon
+            className=""
+            size="30"
+            src={FiThumbsUp}
+          />
+          <span>Terpercaya</span>
+        </div>
+        <div class="flex flex-col items-center justify-center gap-2 p-4 bg-emerald-400/20 text-emerald-600 rounded-lg text-sm">
+          <Icon
+            className=""
+            size="30"
+            src={RiSystemLock2Line}
+          />
+          <span>Privasi Aman</span>
+        </div>
+      </div>
+    </div>
   </div>
 </main>
 
 <style>
   .container {
     width: 100%;
-  height: 100%;
-
-  background: #18181b;
-  --gap: 5em;
-  --line: 1px;
-  --color: rgba(255, 255, 255, 0.2);
-
-  background-image: linear-gradient(
-      -90deg,
+    height: 100%;
+    background: #18181b;
+    --gap: 5em;
+    --line: 1px;
+    --color: rgba(255, 255, 255, 0.2);
+    background-image: linear-gradient(-90deg,
       transparent calc(var(--gap) - var(--line)),
       var(--color) calc(var(--gap) - var(--line) + 1px),
       var(--color) var(--gap)
-    ),
-    linear-gradient(
-      0deg,
+    ), linear-gradient(0deg,
       transparent calc(var(--gap) - var(--line)),
       var(--color) calc(var(--gap) - var(--line) + 1px),
       var(--color) var(--gap)
     );
-  background-size: var(--gap) var(--gap);
+    background-size: var(--gap) var(--gap);
   }
 </style>
