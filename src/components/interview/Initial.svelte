@@ -162,7 +162,7 @@
       <button
         on:click|preventDefault={Start}
         disabled={isSubmitted}
-        class="mt-3 w-fit bg-violet-500 hover:bg-violet-600 disabled:bg-violet-400
+        class="mt-3 w-fit bg-violet-500 hover:bg-violet-400 disabled:bg-violet-400
         text-white py-2 px-5 rounded-full mx-auto flex flex-row gap-2 items-center group"
       >
         <span>Mulai Wawancara</span>
