@@ -1,6 +1,8 @@
 <script lang="ts">
   import { Icon } from 'svelte-icons-pack';
-  import { RiArrowsArrowRightLine, RiUserFacesUserLine, RiSystemLock2Line, RiSystemStarFill  } from 'svelte-icons-pack/ri';
+  import {
+    RiArrowsArrowRightLine, RiUserFacesUserLine, RiSystemLock2Line, RiSystemStarFill, RiFinancePriceTagLine
+  } from 'svelte-icons-pack/ri';
   import { FiThumbsUp } from 'svelte-icons-pack/fi';
   import { fade } from 'svelte/transition';
   import { SITE_NAME, SITE_URL, SITE_DESCRIPTION, SITE_OG_IMG_URL } from '@/lib/constants.js';
@@ -32,13 +34,13 @@
 </svelte:head>
 
 <main class="bg-white min-h-[100dvh]" transition:fade={{ delay: 250, duration: 300 }}>
-  <div class="flex flex-col gap-10">
+  <div class="flex flex-col gap-10 cursor-default">
     <div class="w-full h-96 rounded-xl overflow-hidden relative">  
       <section class="flex flex-col gap-6 justify-center items-center absolute mx-auto w-full h-full my-auto">
         <h1 class="max-w-[800px] text-center text-5xl font-bold text-violet-400">Tingkatkan kepercayaan diri Anda, sukses dalam wawancara kerja</h1>
         <p class="text-lg text-zinc-300 text-center max-w-[800px]">Latih pertanyaan wawancara kerja yang disesuaikan dengan deskripsi pekerjaan Anda. Dapatkan masukan dan saran AI instan untuk menyempurnakan jawaban Anda.</p>
         <a href="/start" class="flex flex-row relative bg-violet-500 py-2 rounded-full w-fit text-white pl-5 pr-12 group">
-          <span>Mulai sekarang</span>
+          <span>Coba sekarang</span>
           <Icon
             className="absolute right-4 top-3 group-hover:right-2 transition-all"
             size="20"
@@ -86,7 +88,15 @@
           </div>
         </div>
       </div>
-      <div class="flex flex-row justify-center items-center gap-6">
+      <div class="flex flex-row justify-center items-center gap-4">
+        <div class="flex flex-col items-center justify-center gap-2 py-4 px-8 bg-pink-400/20 text-pink-600 rounded-lg text-sm">
+          <Icon
+            className=""
+            size="30"
+            src={RiFinancePriceTagLine}
+          />
+          <span>Gratis</span>
+        </div>
         <div class="flex flex-col items-center justify-center gap-2 p-4 bg-amber-400/20 text-amber-600 rounded-lg text-sm">
           <Icon
             className=""
