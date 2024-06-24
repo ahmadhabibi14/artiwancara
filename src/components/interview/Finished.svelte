@@ -3,7 +3,7 @@
   import { InterviewMode, InterviewState, Grade } from '@/state/interview.js';
 </script>
 
-<main transition:fade={{ delay: 250, duration: 300 }}>
+<main transition:fade={{ delay: 250, duration: 200 }}>
   <div class="flex flex-col justify-center items-center w-full gap-4">
     <h1 class="text-3xl font-bold">Wawancara selesai</h1>
     <p class="text-lg">Nilai anda:</p>

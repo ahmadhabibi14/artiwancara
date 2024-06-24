@@ -101,7 +101,7 @@
 
 <Toaster />
 
-<main class="relative" transition:fade={{ delay: 250, duration: 300 }}>
+<main class="relative" transition:fade={{ delay: 250, duration: 200 }}>
   <div class="flex flex-col md:flex-row mx-auto w-full justify-evenly md:gap-0 gap-11">
     <section class="flex flex-col gap-7 justify-center md:w-6/12 w-full">
       <header class="flex flex-col gap-6 md:max-w-[500px] w-full">
@@ -197,7 +197,7 @@
     </section>
   </div>
   {#if isSubmitted}
-    <div class="w-full h-full bg-white/80 absolute top-0" transition:fade={{ delay: 250, duration: 300 }}>
+    <div class="w-full h-full bg-white/80 absolute top-0" transition:fade={{ delay: 250, duration: 200 }}>
       <animation class="dots-container">
         <dot class="dot"></dot>
         <dot class="dot"></dot>

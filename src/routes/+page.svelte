@@ -33,13 +33,13 @@
   <meta name="twitter:image" content={SITE_OG_IMG_URL} />
 </svelte:head>
 
-<main class="bg-white min-h-[100dvh]" transition:fade={{ delay: 250, duration: 300 }}>
+<main class="bg-white min-h-[100dvh]" transition:fade={{ delay: 250, duration: 200 }}>
   <div class="flex flex-col gap-10 cursor-default">
     <div class="w-full h-[400px] md:h-96 rounded-xl overflow-hidden relative">  
       <section class="px-4 flex flex-col gap-6 justify-center items-center absolute mx-auto w-full h-full my-auto">
         <h1 class="w-full md:max-w-[800px] text-center text-3xl md:text-5xl font-bold text-violet-400">Tingkatkan kepercayaan diri Anda, sukses dalam wawancara kerja</h1>
         <p class="text-sm md:text-lg text-zinc-300 text-center max-w-[800px]">Latih pertanyaan wawancara kerja yang disesuaikan dengan deskripsi pekerjaan Anda. Dapatkan masukan dan saran AI instan untuk menyempurnakan jawaban Anda.</p>
-        <a href="/start" class="flex flex-row relative bg-gradient-to-br from-emerald-500 to-emerald-600 py-2 rounded-full w-fit text-white pl-5 pr-12 group">
+        <a href="/start" class="flex flex-row relative bg-gradient-to-br from-emerald-500 to-emerald-700 py-2 rounded-full w-fit text-white pl-5 pr-12 group">
           <p>Coba sekarang</p>
           <Icon
             className="absolute right-4 top-3 group-hover:right-2 transition-all"

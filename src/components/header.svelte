@@ -21,6 +21,7 @@
       <a class="hover:text-violet-500" href="/privacy-policy">Kebijakan Privasi</a>
       <a class="hover:text-violet-500" href="/contact">Kontak</a>
       <a class="hover:text-violet-500" href="/faq">FAQs</a>
+      <a class="bg-emerald-400/20 hover:bg-emerald-400/30 text-emerald-600 py-1.5 px-4 rounded-full" href="/start">Mulai sekarang</a>
     </div>
     <div class="flex md:hidden">
       <button type="button" on:click={() => isShowMenu = !isShowMenu} class="toggle {isShowMenu ? 'clicked' : ''}">
@@ -31,13 +32,17 @@
     </div>
   </div>
   <aside
-    class="{isShowMenu ? 'left-0' : '-left-[250px]'} duration-150 py-6 px-7 h-screen w-[250px] bg-white rounded-r-xl
+    class="{isShowMenu ? 'left-0' : '-left-[250px]'} duration-150 py-6 px-6 h-screen w-[250px] bg-white rounded-r-xl
     fixed z-50 top-0 bottom-0 flex flex-col gap-6">
-    <a class="hover:text-violet-500" href="/" on:click={()=> isShowMenu = !isShowMenu}>Beranda</a>
-    <a class="hover:text-violet-500" href="/about" on:click={()=> isShowMenu = !isShowMenu}>Tentang</a>
-    <a class="hover:text-violet-500" href="/privacy-policy" on:click={()=> isShowMenu = !isShowMenu}>Kebijakan Privasi</a>
-    <a class="hover:text-violet-500" href="/contact" on:click={()=> isShowMenu = !isShowMenu}>Kontak</a>
-    <a class="hover:text-violet-500" href="/faq" on:click={()=> isShowMenu = !isShowMenu}>FAQs</a>
+    <a class="hover:text-violet-500 px-2" href="/" on:click={()=> isShowMenu = false}>Beranda</a>
+    <a class="hover:text-violet-500 px-2" href="/about" on:click={()=> isShowMenu = false}>Tentang</a>
+    <a class="hover:text-violet-500 px-2" href="/privacy-policy" on:click={()=> isShowMenu = false}>Kebijakan Privasi</a>
+    <a class="hover:text-violet-500 px-2" href="/contact" on:click={()=> isShowMenu = false}>Kontak</a>
+    <a class="hover:text-violet-500 px-2" href="/faq" on:click={()=> isShowMenu = false}>FAQs</a>
+    <a
+      on:click={()=> isShowMenu = false}
+      class="bg-emerald-400/20 hover:bg-emerald-400/30 text-emerald-600 py-1.5 px-4 rounded-full text-center"
+      href="/start">Mulai sekarang</a>
   </aside>
 </header>
 

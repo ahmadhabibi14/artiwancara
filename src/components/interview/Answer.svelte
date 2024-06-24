@@ -135,7 +135,7 @@
 
 <Toaster />
 
-<main transition:fade={{ delay: 250, duration: 300 }}>
+<main transition:fade={{ delay: 250, duration: 200 }}>
   <div class="flex flex-col w-full md:w-8/12 md:mx-auto justify-center gap-5">
     <div class="flex flex-row justify-between gap-6">
       <button class="text-sm flex flex-row gap-2 items-center py-1 px-3 border border-zinc-200 hover:border-zinc-400 rounded-full">
@@ -181,7 +181,7 @@
               </button>
             {/if}
             {#if isSubmitted}
-              <div class="w-full h-full bg-white absolute top-0 z-30" transition:fade={{ delay: 250, duration: 300 }}>
+              <div class="w-full h-full bg-white absolute top-0 z-30" transition:fade={{ delay: 250, duration: 200 }}>
                 <animation class="dots-container">
                   <dot class="dot"></dot>
                   <dot class="dot"></dot>
