@@ -8,12 +8,6 @@
   import TypeWriter from 'svelte-typewriter';
   import { type ResponseAnswer } from '@/types/response.js';
 
-  const qqq: string[] = [
-    "Apa pengalaman Anda dalam bekerja dengan sistem kontrol versi seperti Git? Bagaimana Anda menggunakannya dalam tim pengembangan?",
-  ];
-
-  InterviewQuestions.set(qqq);
-
   if ($InterviewQuestions.length === 0) {
     InterviewMode.set(InterviewState.Initial);
   }
