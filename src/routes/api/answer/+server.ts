@@ -1,5 +1,5 @@
 import type { ResponseHTTP } from '@/types/response.js';
-import { json } from '@sveltejs/kit';
+import { json, type RequestHandler } from '@sveltejs/kit';
 import { HttpStatusCode } from 'axios';
 import { GENPROMPT_InterviewAnswer } from '@/lib/prompt.js';
 import { SpeechClient } from '@google-cloud/speech';
@@ -10,7 +10,7 @@ import { type ResponseAnswer } from '@/types/response.js';
 import { GoogleAuth } from 'google-auth-library';
 import { GOOGLE_CREDENTIALS as credentials } from '@/lib/credentials.js';
 
-export const POST: import('@sveltejs/kit').RequestHandler = async ({ request }) => {
+export const POST: RequestHandler = async ({ request }) => {
   const formData = await request.formData();
   const audioFile = formData.get('audio') as File;
   const jobName = formData.get('job_name') as string;

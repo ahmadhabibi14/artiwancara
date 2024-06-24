@@ -1,4 +1,4 @@
-import { error, json } from '@sveltejs/kit';
+import { json, type RequestHandler } from '@sveltejs/kit';
 import { type RequestInterview } from '@/types/request.js';
 import type { ResponseHTTP, ResponseInterview } from '@/types/response.js';
 import { HttpStatusCode } from 'axios';
@@ -15,7 +15,7 @@ function isRequestInterview(data: any): data is RequestInterview {
   )
 }
 
-export const POST: import('@sveltejs/kit').RequestHandler = async ({ request }) => {
+export const POST: RequestHandler = async ({ request }) => {
   const data = await request.json() as RequestInterview;
   if (!isRequestInterview(data)) {
     const errorResp: ResponseHTTP = {

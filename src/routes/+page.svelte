@@ -35,10 +35,10 @@
 
 <main class="bg-white min-h-[100dvh]" transition:fade={{ delay: 250, duration: 300 }}>
   <div class="flex flex-col gap-10 cursor-default">
-    <div class="w-full h-96 rounded-xl overflow-hidden relative">  
-      <section class="flex flex-col gap-6 justify-center items-center absolute mx-auto w-full h-full my-auto">
-        <h1 class="max-w-[800px] text-center text-5xl font-bold text-violet-400">Tingkatkan kepercayaan diri Anda, sukses dalam wawancara kerja</h1>
-        <p class="text-lg text-zinc-300 text-center max-w-[800px]">Latih pertanyaan wawancara kerja yang disesuaikan dengan deskripsi pekerjaan Anda. Dapatkan masukan dan saran AI instan untuk menyempurnakan jawaban Anda.</p>
+    <div class="w-full h-[400px] md:h-96 rounded-xl overflow-hidden relative">  
+      <section class="px-4 flex flex-col gap-6 justify-center items-center absolute mx-auto w-full h-full my-auto">
+        <h1 class="w-full md:max-w-[800px] text-center text-3xl md:text-5xl font-bold text-violet-400">Tingkatkan kepercayaan diri Anda, sukses dalam wawancara kerja</h1>
+        <p class="text-sm md:text-lg text-zinc-300 text-center max-w-[800px]">Latih pertanyaan wawancara kerja yang disesuaikan dengan deskripsi pekerjaan Anda. Dapatkan masukan dan saran AI instan untuk menyempurnakan jawaban Anda.</p>
         <a href="/start" class="flex flex-row relative bg-violet-500 py-2 rounded-full w-fit text-white pl-5 pr-12 group">
           <span>Coba sekarang</span>
           <Icon
@@ -50,13 +50,13 @@
       </section>
       <div class="container"></div>
     </div>
-    <div class="flex flex-row gap-4 justify-between cursor-default">
+    <div class="flex flex-col md:flex-row gap-4 justify-between cursor-default">
       <div class="flex flex-col gap-4">
-        <div class="flex justify-center items-center font-bold gap-2">
+        <div class="flex justify-center items-center font-bold gap-3 md:gap-2">
           <span class="text-blue-600 text-3xl">#1</span>
-          <span class="text-xl">Platform Interview AI terbaik di Indonesia</span>
+          <span class="text-base md:text-xl">Platform Interview AI terbaik di Indonesia</span>
         </div>
-        <div class="flex flex-row gap-4 items-center">
+        <div class="flex flex-row gap-4 items-center justify-center md:justify-start">
           <div class="flex flex-row">
             <img
               src="/img/person-1.png"
@@ -88,7 +88,7 @@
           </div>
         </div>
       </div>
-      <div class="flex flex-row justify-center items-stretch gap-4">
+      <div class="grid grid-cols-2 md:flex flex-row justify-center items-stretch gap-2 md:gap-4 mt-8 md:mt-0">
         <div class="flex flex-col items-center justify-center gap-2 py-4 px-8 bg-pink-400/20 text-pink-600 rounded-lg text-sm h-auto">
           <Icon
             className=""

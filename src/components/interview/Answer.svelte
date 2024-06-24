@@ -130,7 +130,7 @@
 <Toaster />
 
 <main transition:fade={{ delay: 250, duration: 300 }}>
-  <div class="flex flex-col w-8/12 mx-auto justify-center gap-5">
+  <div class="flex flex-col w-full md:w-8/12 md:mx-auto justify-center gap-5">
     <div class="flex flex-row justify-between gap-6">
       <button class="text-sm flex flex-row gap-2 items-center py-1 px-3 border border-zinc-200 hover:border-zinc-400 rounded-full">
         <Icon
@@ -138,7 +138,7 @@
           size="17"
           src={RiArrowsArrowLeftLine}
         />
-        <span>Buat Pertanyaan</span>
+        <span class="hidden md:block">Buat Pertanyaan</span>
       </button>
       <div class="cursor-default flex flex-row gap-2 text-sm py-1 px-3 border border-zinc-200 rounded-full">
         <span>Pertanyaan</span>
@@ -151,7 +151,7 @@
         bg-red-400/10 hover:bg-red-400/20 text-red-500 rounded-full
           disabled:bg-zinc-100 disabled:border-zinc-200 disabled:text-zinc-700 disabled:cursor-not-allowed
         ">
-        <span>Akhiri dan Tinjau</span>
+        <span>Akhiri</span>
       </button>
     </div>
     <div class="shadow-xl border border-zinc-300 rounded-lg overflow-hidden">

@@ -102,9 +102,9 @@
 <Toaster />
 
 <main class="relative" transition:fade={{ delay: 250, duration: 300 }}>
-  <div class="flex flex-row mx-auto w-full justify-evenly">
-    <section class="flex flex-col gap-7 justify-center w-6/12">
-      <header class="flex flex-col gap-6 max-w-[500px]">
+  <div class="flex flex-col md:flex-row mx-auto w-full justify-evenly md:gap-0 gap-11">
+    <section class="flex flex-col gap-7 justify-center md:w-6/12 w-full">
+      <header class="flex flex-col gap-6 md:max-w-[500px] w-full">
         <h1 class="text-3xl font-bold">Pilih pekerjaan</h1>
         <div class="flex flex-auto flex-wrap gap-2">
           {#each (Jobs || []) as job}
@@ -174,7 +174,7 @@
         />
       </button>
     </section>
-    <section class="w-5/12 flex flex-col gap-6">
+    <section class="w-full md:w-5/12 flex flex-col gap-6 m">
       <header class="flex flex-col gap-2">
         <h1 class="text-3xl font-bold">Cari lowongan...</h1>
         <p>Tips! untuk memudahkanmu, carilah lowongan pekerjaan di platform - platform pencarian kerja seperti berikut. Kemudian salin deskripsi, tanggung jawab, dan persyaratan pekerjaan ke form untuk memuat pertanyaan</p>
@@ -189,7 +189,7 @@
             <img
               src={platform.iconSrc}
               alt={platform.name}
-              class="h-8 w-auto"
+              class="h-6 md:h-8 w-auto"
             />
           </a>
         {/each}
