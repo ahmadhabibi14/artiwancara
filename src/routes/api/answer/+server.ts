@@ -130,7 +130,6 @@ export const POST: RequestHandler = async ({ request }) => {
     ai_answer: answerAndGrade[0],
     ai_feedback: answerAndGrade[1],
     grade: Number(answerAndGrade[2]),
-    
   }
 
   return json(respJson);

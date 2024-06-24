@@ -114,6 +114,7 @@
         JawabanAI = data.ai_answer;
         FeedbackAI = data.ai_feedback;
         JawabanUser = data.user_answer;
+
         $Grade += data.grade;
         totalAnsweredQuestion++
       }
@@ -201,7 +202,7 @@
               {#if isAnsweredByAI}
                 {#if JawabanUser !== ''}
                   <TypeWriter cursor={false}>
-                    <p class="text-zinc-500 text-center">"{JawabanUser}"</p>
+                    <p class="text-zinc-500 text-center">{JawabanUser}</p>
                   </TypeWriter>
                 {/if}
                 <button
