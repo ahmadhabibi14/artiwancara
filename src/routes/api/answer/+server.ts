@@ -8,6 +8,8 @@ import { GOOGLE_GEMINI_API_KEY } from '$env/static/private';
 import { type RequestAnswer } from '@/types/request.js';
 import { type ResponseAnswer } from '@/types/response.js';
 
+process.env.GOOGLE_APPLICATION_CREDENTIALS =  JSON.parse(Buffer.from(process.env.GOOGLE_CREDENTIALS, 'base64').toString().replace(/\n/g,'')) 
+
 export const POST: import('@sveltejs/kit').RequestHandler = async ({ request }) => {
   const formData = await request.formData();
   const audioFile = formData.get('audio') as File;
