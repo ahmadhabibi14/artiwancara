@@ -29,9 +29,11 @@
 	"type": "module",
 	"dependencies": {
 		"@google-cloud/speech": "^6.6.0",
+		"@google-cloud/storage": "^7.11.2",
 		"@google/generative-ai": "^0.13.0",
 		"@svelte-plugins/tooltips": "^3.0.1",
 		"axios": "^1.7.2",
+		"google-auth-library": "^9.11.0",
 		"svelte-french-toast": "^1.2.0",
 		"svelte-icons-pack": "^3.1.3"
 	}

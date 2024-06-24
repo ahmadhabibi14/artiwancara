@@ -7,8 +7,8 @@ import { GoogleGenerativeAI, type GenerativeModel, type GenerateContentResult } 
 import { GOOGLE_GEMINI_API_KEY } from '$env/static/private';
 import { type RequestAnswer } from '@/types/request.js';
 import { type ResponseAnswer } from '@/types/response.js';
-
-process.env.GOOGLE_APPLICATION_CREDENTIALS =  process.cwd()+'/google-credentials.json';
+import { GoogleAuth } from 'google-auth-library';
+import { GOOGLE_CREDENTIALS as credentials } from '@/lib/credentials.js';
 
 export const POST: import('@sveltejs/kit').RequestHandler = async ({ request }) => {
   const formData = await request.formData();
@@ -44,7 +44,8 @@ export const POST: import('@sveltejs/kit').RequestHandler = async ({ request }) 
     );
   }
 
-  const speechClient = new SpeechClient();
+  const auth = new GoogleAuth({credentials});
+  const speechClient = new SpeechClient({auth});
   const reqSpeechToText: any = {
     audio: {
       content: new Uint8Array(await audioFile.arrayBuffer())
