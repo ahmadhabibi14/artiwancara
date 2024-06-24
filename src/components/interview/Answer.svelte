@@ -120,7 +120,7 @@
       
     }).catch((err) => {
       console.log('Err', err);
-      toast.error(err.response.data.errors);
+      toast.error('Terjadi kesalahan !!!');
     }).finally(() => {
       isSubmitted = false;
     });
@@ -201,7 +201,7 @@
               {#if isAnsweredByAI}
                 {#if JawabanUser !== ''}
                   <TypeWriter cursor={false}>
-                    <p class="text-zinc-500 text-center">{JawabanUser}</p>
+                    <p class="text-zinc-500 text-center">"{JawabanUser}"</p>
                   </TypeWriter>
                 {/if}
                 <button
