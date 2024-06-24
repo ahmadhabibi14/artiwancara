@@ -25,9 +25,7 @@ export const POST: import('@sveltejs/kit').RequestHandler = async ({ request }) 
       JSON.stringify(errorResp),
       {
         status: HttpStatusCode.BadRequest,
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        headers: { 'Content-Type': 'application/json' }
       }
     );
   }
@@ -41,17 +39,12 @@ export const POST: import('@sveltejs/kit').RequestHandler = async ({ request }) 
       JSON.stringify(errorResp),
       {
         status: HttpStatusCode.BadRequest,
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        headers: { 'Content-Type': 'application/json' }
       }
     );
   }
 
-  console.log('Audio file:', new Uint8Array(await audioFile.arrayBuffer()));
-
   const speechClient = new SpeechClient();
-
   const reqSpeechToText: any = {
     audio: {
       content: new Uint8Array(await audioFile.arrayBuffer())
@@ -79,9 +72,7 @@ export const POST: import('@sveltejs/kit').RequestHandler = async ({ request }) 
       JSON.stringify(errorResp),
       {
         status: HttpStatusCode.BadRequest,
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        headers: { 'Content-Type': 'application/json' }
       }
     );
   }

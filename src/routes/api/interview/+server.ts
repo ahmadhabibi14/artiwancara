@@ -26,9 +26,7 @@ export const POST: import('@sveltejs/kit').RequestHandler = async ({ request }) 
       JSON.stringify(errorResp),
       {
         status: HttpStatusCode.BadRequest,
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        headers: { 'Content-Type': 'application/json' }
       }
     );
   }
@@ -42,9 +40,7 @@ export const POST: import('@sveltejs/kit').RequestHandler = async ({ request }) 
       JSON.stringify(errorResp),
       {
         status: HttpStatusCode.InternalServerError,
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        headers: { 'Content-Type': 'application/json' }
       }
     );
   }
@@ -66,9 +62,7 @@ export const POST: import('@sveltejs/kit').RequestHandler = async ({ request }) 
       JSON.stringify(errorResp),
       {
         status: HttpStatusCode.InternalServerError,
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        headers: { 'Content-Type': 'application/json' }
       }
     );
   }
