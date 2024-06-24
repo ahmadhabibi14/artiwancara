@@ -53,11 +53,13 @@ Serta tuliskan berapa nilai atau bobot dari jawaban user tersebut, dari 1 sampai
 Buatlah jawaban dalam bahasa Indonesia. Tuliskan jawabannya dalam bentuk array javascript, dengan panjang 2 element
 supaya saya bisa memanfaatkannya di pemrograman dengan ketentuan sebagai berikut:
 Element pertama: jawaban anda dari pertanayaan tersebut.
-Element kedua: nilai yang anda berikan berdasarkan jawaban dari user tersebut.
+Element kedua: feedback dari anda berdasarkan jawaban dari user tersebut.
+Element ketiga: nilai yang anda berikan berdasarkan jawaban dari user tersebut.
 
 Langsung saja jawab seperti berikut:
 [
   "Jawaban anda",
+  "Feedback anda",
   "Nilai yang diberikan"
 ]
 

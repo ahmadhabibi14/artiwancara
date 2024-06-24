@@ -66,11 +66,28 @@ export const POST: import('@sveltejs/kit').RequestHandler = async ({ request }) 
       }
     );
   }
+
+  let questions: string[];
+  try {
+    questions = JSON.parse(text.replace(/^```javascript\n|\n``` \n$/g, ''))
+  } catch (error) {
+    const errorResp: ResponseHTTP = {
+      success: false,
+      errors: 'Gagal membuat pertanyaan ke AI. Pastikan input yang anda masukkan valid',
+    }
+    return new Response(
+      JSON.stringify(errorResp),
+      {
+        status: HttpStatusCode.BadRequest,
+        headers: { 'Content-Type': 'application/json' }
+      }
+    );
+  }
   
   const resp: ResponseInterview = {
     success: true,
     errors: '',
-    questions: JSON.parse(text.replace(/^```javascript\n|\n``` \n$/g, '')),
+    questions: questions,
   }
 
 	return json(resp);

@@ -63,7 +63,7 @@ export const POST: import('@sveltejs/kit').RequestHandler = async ({ request }) 
     // @ts-ignore
     transcription = response.results.map(result => result.alternatives[0].transcript).join('\n');
   } catch (error) {
-    console.error(error);
+    console.log('error:', error)
     const errorResp: ResponseHTTP = {
       success: false,
       errors: 'Gagal membaca rekaman suara. Coba lagi nanti',
@@ -90,15 +90,48 @@ export const POST: import('@sveltejs/kit').RequestHandler = async ({ request }) 
   const result: GenerateContentResult = await model.generateContent(prompt);
   const response = await result.response;
   const text: string = response.text();
+
+  console.log('TEXT:', text)
   
-  const answerAndGrade: string[] = JSON.parse(text.replace(/^```javascript\n|\n``` \n$/g, ''));
+  let answerAndGrade: string[]
+  try {
+    answerAndGrade = JSON.parse(text.replace(/^```javascript\n|\n``` \n$/g, ''));
+  } catch (error) {
+    const errorResp: ResponseHTTP = {
+      success: false,
+      errors: 'Gagal menerima jawaban dan feedback dari AI, pastikan suara anda terdengar dengan jelas',
+    }
+    return new Response(
+      JSON.stringify(errorResp),
+      {
+        status: HttpStatusCode.BadRequest,
+        headers: { 'Content-Type': 'application/json' }
+      }
+    );
+  }
+
+  if (answerAndGrade.length !== 3) {
+    const errorResp: ResponseHTTP = {
+      success: false,
+      errors: 'Gagal menerima jawaban dan feedback dari AI, coba lagi nanti',
+    }
+    return new Response(
+      JSON.stringify(errorResp),
+      {
+        status: HttpStatusCode.InternalServerError,
+        headers: { 'Content-Type': 'application/json' }
+      }
+    );
+  }
 
   const respJson: ResponseAnswer = {
     success: true,
     errors: '',
+    user_answer: transcription,
     ai_answer: answerAndGrade[0],
-    grade: Number(answerAndGrade[1]),
-    user_answer: transcription
+    ai_feedback: answerAndGrade[1],
+    grade: Number(answerAndGrade[2]),
+    
   }
 
   return json(respJson);

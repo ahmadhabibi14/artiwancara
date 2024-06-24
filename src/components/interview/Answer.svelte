@@ -8,12 +8,6 @@
   import TypeWriter from 'svelte-typewriter';
   import { type ResponseAnswer } from '@/types/response.js';
 
-  const qqq: string[] = [
-    "Apa pengalaman Anda dalam bekerja dengan sistem kontrol versi seperti Git? Bagaimana Anda menggunakannya dalam tim pengembangan?",
-  ];
-
-  InterviewQuestions.set(qqq);
-
   if ($InterviewQuestions.length === 0) {
     InterviewMode.set(InterviewState.Initial);
   }
@@ -31,7 +25,8 @@
 
   // Response from AI
   let JawabanUser: string = '';
-  let RekomendasiAI: string = '';
+  let JawabanAI: string = '';
+  let FeedbackAI: string = '';
 
   let isRecording: boolean = false;
   let isFinishedRecording: boolean = false;
@@ -80,7 +75,8 @@
     isFinishedRecording = false;
     isAnsweredByAI = false;
 
-    RekomendasiAI = '';
+    JawabanAI = '';
+    FeedbackAI = '';
     JawabanUser = '';
 
     currentTime = 0;
@@ -115,7 +111,8 @@
         toast.error(data.errors);
       } else {
         isAnsweredByAI = true;
-        RekomendasiAI = data.ai_answer;
+        JawabanAI = data.ai_answer;
+        FeedbackAI = data.ai_feedback;
         JawabanUser = data.user_answer;
         $Grade += data.grade;
         totalAnsweredQuestion++
@@ -218,11 +215,19 @@
           </div>
         {/if}
       </div>
-      <div class="bg-zinc-100 py-4 px-4 text-zinc-600 flex flex-col gap-2">
-        <p class="text-sm">Rekomendasi Jawaban dari AI :</p>
-        {#if RekomendasiAI !== ''}
+      <div class="bg-zinc-100 py-4 px-4 text-zinc-600 flex flex-col gap-2 border border-b-zinc-300">
+        <p class="text-sm text-zinc-700 font-semibold">Feedback :</p>
+        {#if FeedbackAI !== ''}
           <TypeWriter cursor={false}>
-            <p>{RekomendasiAI}</p>
+            <p>{FeedbackAI}</p>
+          </TypeWriter>
+        {/if}
+      </div>
+      <div class="bg-zinc-100 py-4 px-4 text-zinc-600 flex flex-col gap-2">
+        <p class="text-sm text-zinc-700 font-semibold">Jawaban dari AI :</p>
+        {#if JawabanAI !== ''}
+          <TypeWriter cursor={false}>
+            <p>{JawabanAI}</p>
           </TypeWriter>
         {/if}
       </div>
