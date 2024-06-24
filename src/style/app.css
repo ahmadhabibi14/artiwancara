@@ -5,3 +5,7 @@
 html {
   font-family: 'Lato', sans-serif;
 }
+
+*::selection {
+  @apply bg-violet-500 text-white; 
+}

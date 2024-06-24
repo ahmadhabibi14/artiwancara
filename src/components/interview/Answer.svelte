@@ -34,7 +34,7 @@
 
   let timer: string = '0:00';
   let currentTime: number = 0;
-  let totalDuration: number = 3 * 60; // 3 minutes in seconds
+  let totalDuration: number = 2 * 60; // 2 minutes in seconds
   let intervalId: NodeJS.Timeout;
 
   const toggleRecording = async () => {
@@ -166,7 +166,7 @@
         {#if Input === inputType.Voice}
           <div class="relative flex flex-col gap-7 justify-center items-center">
             {#if !isAnsweredByAI}
-              <span class="text-5xl font-semibold text-zinc-400/80">{timer} / 3:00</span>
+              <span class="text-5xl font-semibold text-zinc-400/80">{timer} / 2:00</span>
               <button class="relative flex justify-center items-center" on:click={toggleRecording} disabled={isFinishedRecording}>
                 <div class="p-4 bg-violet-500 hover:bg-violet-400 {isFinishedRecording ? 'bg-violet-400 cursor-not-allowed' : ''} rounded-full z-20">
                   <Icon

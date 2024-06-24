@@ -53,7 +53,7 @@
     <div class="flex flex-col md:flex-row gap-4 justify-between cursor-default">
       <div class="flex flex-col gap-4">
         <div class="flex justify-center items-center font-bold gap-3 md:gap-2">
-          <span class="text-blue-600 text-3xl">#1</span>
+          <span class="text-emerald-600 text-3xl">#1</span>
           <span class="text-base md:text-xl">Platform Interview AI terbaik di Indonesia</span>
         </div>
         <div class="flex flex-row gap-4 items-center justify-center md:justify-start">
