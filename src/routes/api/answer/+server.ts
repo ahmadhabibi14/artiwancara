@@ -8,7 +8,7 @@ import { GOOGLE_GEMINI_API_KEY } from '$env/static/private';
 import { type RequestAnswer } from '@/types/request.js';
 import { type ResponseAnswer } from '@/types/response.js';
 
-process.env.GOOGLE_APPLICATION_CREDENTIALS =  JSON.parse(Buffer.from(process.env.GOOGLE_CREDENTIALS, 'base64').toString().replace(/\n/g,'')) 
+process.env.GOOGLE_APPLICATION_CREDENTIALS =  process.cwd()+'/google-credentials.json';
 
 export const POST: import('@sveltejs/kit').RequestHandler = async ({ request }) => {
   const formData = await request.formData();
@@ -90,8 +90,6 @@ export const POST: import('@sveltejs/kit').RequestHandler = async ({ request }) 
   const result: GenerateContentResult = await model.generateContent(prompt);
   const response = await result.response;
   const text: string = response.text();
-
-  console.log('TEXT:', text)
   
   let answerAndGrade: string[]
   try {
