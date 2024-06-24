@@ -23,7 +23,7 @@
       <a class="hover:text-violet-500" href="/faq">FAQs</a>
     </div>
     <div class="flex md:hidden">
-      <button on:click={() => isShowMenu = !isShowMenu} class="toggle">
+      <button on:click={() => isShowMenu = !isShowMenu} class="toggle {isShowMenu ? 'clicked' : ''}">
         <div class="bars" id="bar1"></div>
         <div class="bars" id="bar2"></div>
         <div class="bars" id="bar3"></div>
@@ -42,10 +42,6 @@
 </header>
 
 <style lang="postcss">
-  #checkbox {
-    display: none;
-  }
-
   .toggle {
     position: relative;
     width: 30px;
@@ -70,33 +66,33 @@
     transition-duration: .8s;
   }
 
-  #bar1,#bar3 {
+  #bar1, #bar3 {
     width: 70%;
   }
 
-  #checkbox:checked + .toggle .bars {
+  .toggle.clicked .bars {
     position: absolute;
     transition-duration: .5s;
   }
 
-  #checkbox:checked + .toggle #bar2 {
+  .toggle.clicked #bar2 {
     transform: scaleX(0);
     transition-duration: .5s;
   }
 
-  #checkbox:checked + .toggle #bar1 {
+  .toggle.clicked #bar1 {
     width: 100%;
     transform: rotate(45deg);
     transition-duration: .5s;
   }
 
-  #checkbox:checked + .toggle #bar3 {
+  .toggle.clicked #bar3 {
     width: 100%;
     transform: rotate(-45deg);
     transition-duration: .5s;
   }
 
-  #checkbox:checked + .toggle {
+  .toggle.clicked {
     transition-duration: .5s;
     transform: rotate(180deg);
   }
