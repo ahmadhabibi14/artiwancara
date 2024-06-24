@@ -6,7 +6,7 @@
   import { Icon } from 'svelte-icons-pack';
   import { RiMediaMicLine, RiArrowsArrowLeftLine, RiDesignSquareFill } from 'svelte-icons-pack/ri';
   import TypeWriter from 'svelte-typewriter';
-  import { type ResponseAnswer } from '@/types/response.js';
+  import { type ResponseAnswer, type ResponseHTTP } from '@/types/response.js';
 
   if ($InterviewQuestions.length === 0) {
     InterviewMode.set(InterviewState.Initial);
@@ -120,8 +120,13 @@
       }
       
     }).catch((err) => {
-      console.log('Err', err);
-      toast.error('Terjadi kesalahan !!!');
+      console.log('ERROR:', err);
+      const data: ResponseHTTP = err.response.data as ResponseHTTP;
+      if (data.success === false) {
+        toast.error(data.errors);
+      } else {
+        toast.error('Terjadi kesalahan !!!');
+      }
     }).finally(() => {
       isSubmitted = false;
     });
