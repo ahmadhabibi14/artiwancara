@@ -23,7 +23,7 @@
       <a class="hover:text-violet-500" href="/faq">FAQs</a>
     </div>
     <div class="flex md:hidden">
-      <button on:click={() => isShowMenu = !isShowMenu} class="toggle {isShowMenu ? 'clicked' : ''}">
+      <button type="button" on:click={() => isShowMenu = !isShowMenu} class="toggle {isShowMenu ? 'clicked' : ''}">
         <div class="bars" id="bar1"></div>
         <div class="bars" id="bar2"></div>
         <div class="bars" id="bar3"></div>

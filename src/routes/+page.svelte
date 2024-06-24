@@ -39,8 +39,8 @@
       <section class="px-4 flex flex-col gap-6 justify-center items-center absolute mx-auto w-full h-full my-auto">
         <h1 class="w-full md:max-w-[800px] text-center text-3xl md:text-5xl font-bold text-violet-400">Tingkatkan kepercayaan diri Anda, sukses dalam wawancara kerja</h1>
         <p class="text-sm md:text-lg text-zinc-300 text-center max-w-[800px]">Latih pertanyaan wawancara kerja yang disesuaikan dengan deskripsi pekerjaan Anda. Dapatkan masukan dan saran AI instan untuk menyempurnakan jawaban Anda.</p>
-        <a href="/start" class="flex flex-row relative bg-violet-500 py-2 rounded-full w-fit text-white pl-5 pr-12 group">
-          <span>Coba sekarang</span>
+        <a href="/start" class="flex flex-row relative bg-gradient-to-br from-emerald-600 to-emerald-700 py-2 rounded-full w-fit text-white pl-5 pr-12 group">
+          <p>Coba sekarang</p>
           <Icon
             className="absolute right-4 top-3 group-hover:right-2 transition-all"
             size="20"
@@ -53,8 +53,8 @@
     <div class="flex flex-col md:flex-row gap-4 justify-between cursor-default">
       <div class="flex flex-col gap-4">
         <div class="flex justify-center items-center font-bold gap-3 md:gap-2">
-          <span class="text-emerald-600 text-3xl">#1</span>
-          <span class="text-base md:text-xl">Platform Interview AI terbaik di Indonesia</span>
+          <p class="text-emerald-600 text-3xl">#1</p>
+          <p class="text-base md:text-xl">Platform Interview AI terbaik di Indonesia</p>
         </div>
         <div class="flex flex-row gap-4 items-center justify-center md:justify-start">
           <div class="flex flex-row">
@@ -95,7 +95,7 @@
             size="30"
             src={RiFinancePriceTagLine}
           />
-          <span>Gratis</span>
+          <p>Gratis</p>
         </div>
         <div class="flex flex-col items-center justify-center gap-2 p-4 bg-amber-400/20 text-amber-600 rounded-lg text-sm h-auto">
           <Icon
@@ -103,7 +103,7 @@
             size="30"
             src={RiUserFacesUserLine}
           />
-          <span>Ramah Pengguna</span>
+          <p>Ramah Pengguna</p>
         </div>
         <div class="flex flex-col items-center justify-center gap-2 p-4 bg-blue-400/20 text-blue-600 rounded-lg text-sm h-auto">
           <Icon
@@ -111,7 +111,7 @@
             size="30"
             src={FiThumbsUp}
           />
-          <span>Terpercaya</span>
+          <p>Terpercaya</p>
         </div>
         <div class="flex flex-col items-center justify-center gap-2 p-4 bg-emerald-400/20 text-emerald-600 rounded-lg text-sm h-auto">
           <Icon
@@ -119,7 +119,7 @@
             size="30"
             src={RiSystemLock2Line}
           />
-          <span>Privasi Aman</span>
+          <p>Privasi Aman</p>
         </div>
       </div>
     </div>
