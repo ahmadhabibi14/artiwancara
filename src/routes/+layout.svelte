@@ -7,7 +7,7 @@
 
 <main class="bg-white text-zinc-800">
   <Header />
-  <section class="min-h-[100dvh] md:w-9/12 w-full px-5 md:mx-auto mt-6 md:mt-10 mb-11">
+  <section class="min-h-[100dvh] md:w-9/12 w-full px-5 md:px-0 md:mx-auto mt-6 md:mt-10 mb-11">
     <slot />
   </section>
   <Footer />
