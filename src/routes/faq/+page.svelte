@@ -6,7 +6,7 @@
   <title>Artiwancara | FAQs</title>
 </svelte:head>
 
-<main class="bg-white min-h-[100dvh]" transition:fade={{ delay: 250, duration: 200 }}>
+<main transition:fade={{ delay: 250, duration: 200 }}>
   <div>
     <h1>FAQs</h1>
   </div>

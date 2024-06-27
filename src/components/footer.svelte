@@ -2,7 +2,7 @@
 
 </script>
 
-<footer class="bg-white w-full h-fit flex flex-col items-center border border-t-zinc-200 cursor-default">
+<footer class="bg-white dark:bg-zinc-900 w-full h-fit flex flex-col items-center border-t border-t-zinc-200 dark:border-t-zinc-800 cursor-default">
   <div class="w-9/12 mx-auto py-5 flex flex-col md:flex-row justify-between items-center">
     <a href="/">
       <img

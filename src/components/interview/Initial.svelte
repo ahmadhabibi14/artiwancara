@@ -113,7 +113,7 @@
               class="text-sm py-1 px-3  rounded-full border
               {jobName === job.name
                 ? 'bg-violet-500/20 border-violet-400 text-violet-500'
-                : 'bg-zinc-100 border-zinc-200 text-zinc-600 hover:bg-zinc-200'
+                : 'bg-zinc-100 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800'
               }"
             >
               {job.label}
@@ -122,7 +122,7 @@
         </div>
       </header>
       <div class="flex flex-col gap-4">
-        <div class="flex flex-row gap-2 items-center border-b border-b-zinc-200 pb-5">
+        <div class="flex flex-row gap-2 items-center border-b border-b-zinc-200 dark:border-b-zinc-700 pb-5">
           <label for="" class="ml-2 text-sm">Jenis Pekerjaan:</label>
           <p class="text-xl font-bold">{jobLabel}</p>
         </div>
@@ -133,7 +133,7 @@
             id="job_description"
             bind:value={jobDescription}
             rows="2"
-            class="border border-zinc-300 p-3 rounded-lg focus:border-violet-500
+            class="border border-zinc-300 dark:bg-zinc-900 dark:border-zinc-700 p-3 rounded-lg focus:border-violet-500
               focus:outline focus:outline-violet-500 max-h-[160px] min-h-[75px]"
           ></textarea>
         </div>
@@ -144,7 +144,7 @@
             id="job_responsibilities"
             bind:value={jobResponsibilities}
             rows="5"
-            class="border border-zinc-300 p-3 rounded-lg focus:border-violet-500
+            class="border border-zinc-300 dark:bg-zinc-900 dark:border-zinc-700 p-3 rounded-lg focus:border-violet-500
               focus:outline focus:outline-violet-500 resize-y max-h-[200px] min-h-[145px]"
           ></textarea>
         </div>
@@ -155,7 +155,7 @@
             id="job_requirements"
             bind:value={jobRequirements}
             rows="5"
-            class="border border-zinc-300 p-3 rounded-lg focus:border-violet-500
+            class="border border-zinc-300 dark:bg-zinc-900 dark:border-zinc-700 p-3 rounded-lg focus:border-violet-500
               focus:outline focus:outline-violet-500 resize-y max-h-[200px] min-h-[145px]"
           ></textarea>
         </div>
@@ -185,7 +185,7 @@
             use:tooltip={{ content: platform.name }}
             href={platform.url}
             target="_blank"
-            class="py-3 px-5 bg-white border border-zinc-200 hover:border-zinc-400 rounded-lg">
+            class="py-3 px-5 bg-white dark:bg-white border border-zinc-200  hover:border-zinc-400 rounded-lg">
             <img
               src={platform.iconSrc}
               alt={platform.name}
@@ -197,7 +197,7 @@
     </section>
   </div>
   {#if isSubmitted}
-    <div class="w-full h-full bg-white/80 absolute top-0" transition:fade={{ delay: 250, duration: 200 }}>
+    <div class="w-full h-full bg-white/80 dark:bg-zinc-950/70 absolute top-0" transition:fade={{ delay: 250, duration: 200 }}>
       <animation class="dots-container">
         <dot class="dot"></dot>
         <dot class="dot"></dot>

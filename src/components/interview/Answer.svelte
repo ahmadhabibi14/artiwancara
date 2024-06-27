@@ -113,7 +113,7 @@
         isAnsweredByAI = true;
         JawabanAI = data.ai_answer;
         FeedbackAI = data.ai_feedback;
-        JawabanUser = data.user_answer;
+        JawabanUser = `"`+data.user_answer+`"`;
 
         $Grade += data.grade;
         totalAnsweredQuestion++
@@ -137,16 +137,18 @@
 
 <main transition:fade={{ delay: 250, duration: 200 }}>
   <div class="flex flex-col w-full md:w-8/12 md:mx-auto justify-center gap-5">
-    <div class="flex flex-row justify-between gap-6">
-      <button class="text-sm flex flex-row gap-2 items-center py-1 px-3 border border-zinc-200 hover:border-zinc-400 rounded-full">
+    <div class="flex flex-row justify-between gap-6 dark:text-zinc-300">
+      <button 
+      on:click={() => InterviewMode.set(InterviewState.Initial)}
+      class="text-sm flex flex-row gap-2 items-center py-1 px-3 border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-900 hover:border-zinc-400 dark:hover:border-zinc-700  rounded-full">
         <Icon
-          className="fill-zinc-600"
+          className="fill-zinc-600 dark:fill-zinc-300"
           size="17"
           src={RiArrowsArrowLeftLine}
         />
         <span class="hidden md:block">Buat Pertanyaan</span>
       </button>
-      <div class="cursor-default flex flex-row gap-2 text-sm py-1 px-3 border border-zinc-200 rounded-full">
+      <div class="cursor-default flex flex-row gap-2 text-sm py-1 px-3 border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-900 hover:border-zinc-400 dark:hover:border-zinc-700 rounded-full">
         <span>Pertanyaan</span>
         <span><span class="text-violet-500 font-semibold">{currentQuestionNumber}</span> / <span class="text-violet-500 font-semibold">{$InterviewQuestions.length}</span></span>
       </div>
@@ -155,18 +157,18 @@
         disabled={totalAnsweredQuestion === 0}
         class="cursor-pointer flex flex-row gap-2 text-sm py-1 px-3 border border-red-400/10
         bg-red-400/10 hover:bg-red-400/20 text-red-500 rounded-full
-          disabled:bg-zinc-100 disabled:border-zinc-200 disabled:text-zinc-700 disabled:cursor-not-allowed
+          disabled:bg-zinc-100 dark:disabled:bg-zinc-900 disabled:border-zinc-200 dark:disabled:border-zinc-800 disabled:text-zinc-700 dark:disabled:text-zinc-300 disabled:cursor-not-allowed
         ">
         <span>Akhiri</span>
       </button>
     </div>
-    <div class="shadow-xl border border-zinc-300 rounded-lg overflow-hidden">
-      <div class="flex flex-col gap-7 p-5 border-b border-zinc-300">
+    <div class="shadow-xl border border-zinc-300 dark:border-zinc-800 dark:bg-zinc-950 rounded-lg overflow-hidden">
+      <div class="flex flex-col gap-7 p-5 border-b border-zinc-300 dark:border-zinc-800">
         <h3 class="text-xl text-center font-bold">{currentQuestion}</h3>
         {#if Input === inputType.Voice}
           <div class="relative flex flex-col gap-7 justify-center items-center">
             {#if !isAnsweredByAI}
-              <span class="text-5xl font-semibold text-zinc-400/80">{timer} / 2:00</span>
+              <span class="text-5xl font-semibold text-zinc-400/80 dark:text-zinc-400">{timer} / 2:00</span>
               <button class="relative flex justify-center items-center" on:click={toggleRecording} disabled={isFinishedRecording}>
                 <div class="p-4 bg-violet-500 hover:bg-violet-400 {isFinishedRecording ? 'bg-violet-400 cursor-not-allowed' : ''} rounded-full z-20">
                   <Icon
@@ -181,7 +183,7 @@
               </button>
             {/if}
             {#if isSubmitted}
-              <div class="w-full h-full bg-white absolute top-0 z-30" transition:fade={{ delay: 250, duration: 200 }}>
+              <div class="w-full h-full bg-white dark:bg-zinc-950 absolute top-0 z-30" transition:fade={{ delay: 250, duration: 200 }}>
                 <animation class="dots-container">
                   <dot class="dot"></dot>
                   <dot class="dot"></dot>
@@ -207,7 +209,7 @@
               {#if isAnsweredByAI}
                 {#if JawabanUser !== ''}
                   <TypeWriter cursor={false}>
-                    <p class="text-zinc-500 text-center">{JawabanUser}</p>
+                    <p class="text-zinc-500 dark:text-zinc-300 text-center">{JawabanUser}</p>
                   </TypeWriter>
                 {/if}
                 <button
@@ -221,16 +223,16 @@
           </div>
         {/if}
       </div>
-      <div class="bg-zinc-100 py-4 px-4 text-zinc-600 flex flex-col gap-2 border border-b-zinc-300">
-        <p class="text-sm text-zinc-700 font-semibold">Feedback :</p>
+      <div class="bg-zinc-100 dark:bg-zinc-900 py-4 px-4 text-zinc-600 dark:text-zinc-400 flex flex-col gap-2 border-b border-b-zinc-300 dark:border-b-zinc-800">
+        <p class="text-sm text-zinc-700 dark:text-zinc-300 font-semibold">Feedback :</p>
         {#if FeedbackAI !== ''}
           <TypeWriter cursor={false}>
             <p>{FeedbackAI}</p>
           </TypeWriter>
         {/if}
       </div>
-      <div class="bg-zinc-100 py-4 px-4 text-zinc-600 flex flex-col gap-2">
-        <p class="text-sm text-zinc-700 font-semibold">Jawaban dari AI :</p>
+      <div class="bg-zinc-100 dark:bg-zinc-900 py-4 px-4 text-zinc-600 dark:text-zinc-400 flex flex-col gap-2">
+        <p class="text-sm text-zinc-700 dark:text-zinc-300 font-semibold">Jawaban dari AI :</p>
         {#if JawabanAI !== ''}
           <TypeWriter cursor={false}>
             <p>{JawabanAI}</p>
@@ -243,7 +245,7 @@
 
 <style lang="postcss">
   .mic-on {
-    @apply absolute bg-violet-100 z-10 rounded-full;
+    @apply absolute bg-violet-100 dark:bg-violet-500/20 z-10 rounded-full;
     width: 65px;
     height: 65px;
     display: flex;

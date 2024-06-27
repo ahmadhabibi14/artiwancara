@@ -37,6 +37,6 @@
   <meta name="twitter:image" content={SITE_OG_IMG_URL} />
 </svelte:head>
 
-<main class="bg-white min-h-[100dvh]">
+<div>
   <svelte:component this={views[$InterviewMode]} />
-</main>
+</div>

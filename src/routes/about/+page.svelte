@@ -1,12 +1,12 @@
 <script lang="ts">
- 
+  import { fade } from 'svelte/transition';
 </script>
 
 <svelte:head>
   <title>Artiwancara | Tentang</title>
 </svelte:head>
 
-<main class="bg-white min-h-[100dvh]">
+<main transition:fade={{ delay: 250, duration: 200 }}>
   <div>
     <h1>Tentang</h1>
   </div>
