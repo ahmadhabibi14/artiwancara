@@ -114,7 +114,7 @@
       for="themeToggle_mobile"
       class="themeToggle st-sunMoonThemeToggleBtn"
     >
-      <input bind:checked={isDarkTheme} type="checkbox" id="themeToggle_mobile" class="themeToggleInput" />
+      <input on:change={toggleTheme} bind:checked={isDarkTheme} type="checkbox" id="themeToggle_mobile" class="themeToggleInput" />
       <svg
         width="18"
         height="18"
