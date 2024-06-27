@@ -1,9 +1,6 @@
 <script lang="ts">
   import { Icon } from 'svelte-icons-pack';
-  import {
-    RiArrowsArrowRightLine, RiUserFacesUserLine, RiSystemLock2Line, RiSystemStarFill, RiFinancePriceTagLine
-  } from 'svelte-icons-pack/ri';
-  import { FiThumbsUp } from 'svelte-icons-pack/fi';
+  import { RiArrowsArrowRightLine, RiSystemStarFill } from 'svelte-icons-pack/ri';
   import { fade } from 'svelte/transition';
   import { SITE_NAME, SITE_URL, SITE_DESCRIPTION, SITE_OG_IMG_URL } from '@/lib/constants.js';
 
@@ -89,35 +86,35 @@
         </div>
       </div>
       <div class="grid grid-cols-2 md:flex flex-row justify-center items-stretch gap-2 md:gap-4 mt-8 md:mt-0">
-        <div class="flex flex-col items-center justify-center gap-2 py-4 px-8 bg-pink-400/20 text-pink-600 rounded-lg text-sm h-auto">
-          <Icon
-            className=""
-            size="30"
-            src={RiFinancePriceTagLine}
+        <div class="flex flex-col items-center justify-center gap-2 py-4 px-8 bg-amber-400/20 text-amber-600 rounded-lg text-sm h-auto">
+          <img
+            src="/icons/gratis.svg"
+            class="w-10 h-10"
+            alt="gratis"
           />
           <p>Gratis</p>
         </div>
-        <div class="flex flex-col items-center justify-center gap-2 p-4 bg-amber-400/20 text-amber-600 rounded-lg text-sm h-auto">
-          <Icon
-            className=""
-            size="30"
-            src={RiUserFacesUserLine}
+        <div class="flex flex-col items-center justify-center gap-2 p-4 bg-pink-400/20 text-pink-600 rounded-lg text-sm h-auto">
+          <img
+            src="/icons/ramah-pengguna.svg"
+            class="w-10 h-10"
+            alt="ramah-pengguna"
           />
           <p>Ramah Pengguna</p>
         </div>
         <div class="flex flex-col items-center justify-center gap-2 p-4 bg-blue-400/20 text-blue-600 rounded-lg text-sm h-auto">
-          <Icon
-            className=""
-            size="30"
-            src={FiThumbsUp}
+          <img
+            src="/icons/terpercaya.svg"
+            class="w-10 h-10"
+            alt="terpercaya"
           />
           <p>Terpercaya</p>
         </div>
         <div class="flex flex-col items-center justify-center gap-2 p-4 bg-emerald-400/20 text-emerald-600 rounded-lg text-sm h-auto">
-          <Icon
-            className=""
-            size="30"
-            src={RiSystemLock2Line}
+          <img
+            src="/icons/privasi-aman.svg"
+            class="w-10 h-10"
+            alt="privasi-aman"
           />
           <p>Privasi Aman</p>
         </div>
