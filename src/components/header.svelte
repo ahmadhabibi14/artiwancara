@@ -1,12 +1,14 @@
 <script lang="ts">
   import { browser } from '$app/environment';
   import { onMount } from 'svelte';
+
+
   let isShowMenu: boolean = false;
   let isDarkTheme: boolean = false;
 
-  $: {
+  const toggleTheme = () => {
     if (browser) {
-      if (isDarkTheme) {
+      if (!isDarkTheme) {
         document.documentElement.classList.add('dark');
         document.documentElement.setAttribute('data-theme', 'dark');
         localStorage.setItem('theme', 'dark');
@@ -19,13 +21,16 @@
   }
 
   onMount(() => {
-    if (browser) {
-      if (localStorage.getItem('theme') === 'dark') {
-        isDarkTheme = true;
-      } else {
-        isDarkTheme = false;
-        localStorage.setItem('theme', 'light');
-      }
+    if (localStorage.getItem('theme') === 'dark') {
+      isDarkTheme = true;
+      document.documentElement.classList.add('dark');
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      isDarkTheme = false;
+      document.documentElement.classList.remove('dark');
+      document.documentElement.setAttribute('data-theme', 'light');
+      localStorage.setItem('theme', 'light');
     }
   })
 </script>
@@ -49,7 +54,7 @@
         for="themeToggle"
         class="themeToggle st-sunMoonThemeToggleBtn"
       >
-        <input bind:checked={isDarkTheme} type="checkbox" id="themeToggle" class="themeToggleInput" />
+        <input on:change={toggleTheme} bind:checked={isDarkTheme} type="checkbox" id="themeToggle" class="themeToggleInput" />
         <svg
           width="18"
           height="18"

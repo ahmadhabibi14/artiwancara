@@ -14,7 +14,7 @@
     <div class="text-sm font-medium text-center md:text-end mt-3 md:mt-0">
       <p>Dibuat oleh <a href="https://habibi2004.pages.dev" class="underline hover:text-violet-500">Ahmad Habibi</a></p>
       <p>Petanyaan dan Feedback? Telegram: <a href="https://t.me/ahmadhabibi14" class="underline hover:text-violet-500">ahmadhabibi14</a></p>
-      <p class="text-zinc-500 text-xs md:mt-3 mt-4">Copyright © 2024.</p>
+      <p class="text-zinc-500 dark:text-zinc-400 text-xs md:mt-3 mt-4">Copyright © 2024.</p>
     </div>
   </div>
 </footer>
