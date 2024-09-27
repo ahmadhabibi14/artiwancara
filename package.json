@@ -32,6 +32,7 @@
 		"@google-cloud/storage": "^7.11.2",
 		"@google/generative-ai": "^0.13.0",
 		"@svelte-plugins/tooltips": "^3.0.1",
+		"assemblyai": "^4.7.0",
 		"axios": "^1.7.2",
 		"google-auth-library": "^9.11.0",
 		"svelte-french-toast": "^1.2.0",

@@ -2,13 +2,12 @@ import type { ResponseHTTP } from '@/types/response.js';
 import { json, type RequestHandler } from '@sveltejs/kit';
 import { HttpStatusCode } from 'axios';
 import { GENPROMPT_InterviewAnswer } from '@/lib/prompt.js';
-import { SpeechClient } from '@google-cloud/speech';
 import { GoogleGenerativeAI, type GenerativeModel, type GenerateContentResult } from '@google/generative-ai';
-import { GOOGLE_GEMINI_API_KEY } from '$env/static/private';
+import { GOOGLE_GEMINI_API_KEY, ASSEMBLYAI_SPEECH_API_KEY } from '$env/static/private';
 import { type RequestAnswer } from '@/types/request.js';
 import { type ResponseAnswer } from '@/types/response.js';
-import { GoogleAuth } from 'google-auth-library';
-import { GOOGLE_CREDENTIALS as credentials } from '@/lib/credentials.js';
+import { ResponseJSONFunc } from '@/lib/http.js';
+import { AssemblyAI, type TranscribeParams } from 'assemblyai';
 
 export const POST: RequestHandler = async ({ request }) => {
   const formData = await request.formData();
@@ -17,75 +16,38 @@ export const POST: RequestHandler = async ({ request }) => {
   const question = formData.get('question') as string;
 
   if (!audioFile) {
-    const errorResp: ResponseHTTP = {
+    return ResponseJSONFunc<ResponseHTTP>({
       success: false,
       errors: 'Tidak ada rekaman suara',
-    }
-    return new Response(
-      JSON.stringify(errorResp),
-      {
-        status: HttpStatusCode.BadRequest,
-        headers: { 'Content-Type': 'application/json' }
-      }
-    );
+    }, HttpStatusCode.BadRequest);
   }
 
   if (!question || question === '') {
-    const errorResp: ResponseHTTP = {
+    return ResponseJSONFunc<ResponseHTTP>({
       success: false,
       errors: 'Tidak ada pertanyaan',
-    }
-    return new Response(
-      JSON.stringify(errorResp),
-      {
-        status: HttpStatusCode.BadRequest,
-        headers: { 'Content-Type': 'application/json' }
-      }
-    );
+    }, HttpStatusCode.BadRequest);
   }
 
-  const auth = new GoogleAuth({credentials});
-  const speechClient = new SpeechClient({auth});
-  const reqSpeechToText: any = {
-    audio: {
-      content: new Uint8Array(await audioFile.arrayBuffer())
-    },
-    config: {
-      encoding: 'WEBM_OPUS',
-      sampleRateHertz: 48000,
-      languageCode: 'id-ID',
-    }
+  let transcription: string = '';
+  const client = new AssemblyAI({
+    apiKey: ASSEMBLYAI_SPEECH_API_KEY+''
+  })
+  const transcribeParam: TranscribeParams = {
+    audio: audioFile,
   }
 
-  let transcription: string;
-  try {
-    const [operation] = await speechClient.longRunningRecognize(reqSpeechToText);
-    const [response] = await operation.promise(); // @ts-ignore
-    transcription = response.results.map(result => result.alternatives[0].transcript).join('\n');
-  } catch {
-    const respText: Promise<string> = await speechClient.recognize(
-      reqSpeechToText
-    ).then((data: any) => {
-      const s = data[0].results.map((r: { alternatives: { transcript: any; }[]; }) => {
-        r.alternatives[0].transcript
-      }).join('\n');
-      return s;
-    }).catch(() => {
-      const errorResp: ResponseHTTP = {
-        success: false,
-        errors: 'Gagal membaca rekaman suara. Coba lagi nanti',
-      }
-      return new Response(
-        JSON.stringify(errorResp),
-        {
-          status: HttpStatusCode.BadRequest,
-          headers: { 'Content-Type': 'application/json' }
-        }
-      );
-    });
-    
-    transcription = await respText;
+  const transcribtion = await client.transcripts.transcribe(transcribeParam);
+  transcription = transcribtion.text as string;
+
+  if (!transcription) {
+    return ResponseJSONFunc<ResponseHTTP>({
+      success: false,
+      errors: 'Gagal menerima rekaman suara, pastikan rekaman suara anda terdengar dengan jelas',
+    }, HttpStatusCode.BadRequest);
   }
+
+  console.log('TRANSCRIPTION 2', transcription)
 
   const data: RequestAnswer = {
     job_name: jobName,
@@ -105,39 +67,25 @@ export const POST: RequestHandler = async ({ request }) => {
   try {
     answerAndGrade = JSON.parse(text.replace(/^```javascript\n|\n``` \n$/g, ''));
   } catch (error) {
-    const errorResp: ResponseHTTP = {
+    return ResponseJSONFunc<ResponseHTTP>({
       success: false,
       errors: 'Gagal menerima jawaban dan feedback dari AI, pastikan suara anda terdengar dengan jelas',
-    }
-    return new Response(
-      JSON.stringify(errorResp),
-      {
-        status: HttpStatusCode.BadRequest,
-        headers: { 'Content-Type': 'application/json' }
-      }
-    );
+    }, HttpStatusCode.BadRequest);
   }
 
   if (answerAndGrade.length !== 3) {
-    const errorResp: ResponseHTTP = {
+    return ResponseJSONFunc<ResponseHTTP>({
       success: false,
       errors: 'Gagal menerima jawaban dan feedback dari AI, coba lagi nanti',
-    }
-    return new Response(
-      JSON.stringify(errorResp),
-      {
-        status: HttpStatusCode.InternalServerError,
-        headers: { 'Content-Type': 'application/json' }
-      }
-    );
+    }, HttpStatusCode.InternalServerError);
   }
 
   const respJson: ResponseAnswer = {
     success: true,
     errors: '',
-    user_answer: transcription,
-    ai_answer: answerAndGrade[0],
-    ai_feedback: answerAndGrade[1],
+    user_answer: String(transcription)+'',
+    ai_answer: String(answerAndGrade[0])+'',
+    ai_feedback: String(answerAndGrade[1])+'',
     grade: Number(answerAndGrade[2]),
   }
 
