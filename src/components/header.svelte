@@ -1,7 +1,8 @@
 <script lang="ts">
   import { browser } from '$app/environment';
   import { onMount } from 'svelte';
-
+  import { Icon } from 'svelte-icons-pack';
+  import { RiLogosGithubFill } from 'svelte-icons-pack/ri';
 
   let isShowMenu: boolean = false;
   let isDarkTheme: boolean = false;
@@ -42,13 +43,28 @@
 
 <header class="bg-white dark:bg-zinc-900 w-full h-fit flex items-center">
   <div class="md:w-9/12 md:mx-auto py-3 md:px-0 px-5 flex flex-row justify-between items-center gap-6 w-full">
-    <a href="/">
-      <img
-        src="/icons/logo.svg"
-        alt="artiwancara"
-        class="w-[160px] h-auto"
-      />
-    </a>
+    <div class="flex flex-row items-center gap-6">
+      <a href="/">
+        <img
+          src="/icons/logo.svg"
+          alt="artiwancara"
+          class="w-[160px] h-auto"
+        />
+      </a>
+      <div class="md:flex flex-row items-center gap-5 hidden">
+        <a class="hover:text-violet-500" href="/about">Tentang</a>
+        <a class="hover:text-violet-500" href="/privacy-policy">Kebijakan Privasi</a>
+        <a class="hover:text-violet-500" href="/contact">Kontak</a>
+        <a class="hover:text-violet-500" href="/faq">FAQs</a>
+        <a href="https://github.com/ahmadhabibi14/artiwancara" target="_blank"
+          class="p-1.5 w-fit rounded-full flex justify-center items-center dark:hover:bg-zinc-800 hover:bg-zinc-100">
+          <Icon
+            src={RiLogosGithubFill}
+            size="25"
+          />
+        </a>
+      </div>
+    </div>
     <div class="hidden md:flex flex-row gap-4 items-center text-sm font-medium">
       <label
         for="themeToggle"
@@ -83,10 +99,6 @@
           </g>
         </svg>
       </label>
-      <a class="hover:text-violet-500" href="/about">Tentang</a>
-      <a class="hover:text-violet-500" href="/privacy-policy">Kebijakan Privasi</a>
-      <a class="hover:text-violet-500" href="/contact">Kontak</a>
-      <a class="hover:text-violet-500" href="/faq">FAQs</a>
       <a class="bg-emerald-400/20 hover:bg-emerald-400/30 text-emerald-600 dark:text-emerald-400 py-1.5 px-4 rounded-full" href="/start">Mulai sekarang</a>
     </div>
     <div class="flex md:hidden">
@@ -105,11 +117,22 @@
     <a class="hover:text-violet-500 px-2" href="/privacy-policy" on:click={()=> isShowMenu = false}>Kebijakan Privasi</a>
     <a class="hover:text-violet-500 px-2" href="/contact" on:click={()=> isShowMenu = false}>Kontak</a>
     <a class="hover:text-violet-500 px-2" href="/faq" on:click={()=> isShowMenu = false}>FAQs</a>
-    <a
-      on:click={()=> isShowMenu = false}
-      class="bg-emerald-400/20 hover:bg-emerald-400/30 text-emerald-600 dark:text-emerald-400 py-1.5 px-4 rounded-full text-center"
-      href="/start"
-    >Mulai sekarang</a>
+    <div class="flex flex-col gap-2"> 
+      <a
+        on:click={()=> isShowMenu = false}
+        class="bg-emerald-400/20 hover:bg-emerald-400/30 text-emerald-600 dark:text-emerald-400 py-1.5 px-4 rounded-full text-center"
+        href="/start"
+      >Mulai sekarang</a>
+      <a href="https://github.com/ahmadhabibi14/artiwancara" target="_blank"
+        class="bg-zinc-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 hover:bg-zinc-200 py-1.5 px-4 rounded-full text-center
+          flex justify-center items-center flex-row gap-2">
+        <Icon
+          src={RiLogosGithubFill}
+          size="22"
+        />
+        <span>Kontribusi</span>
+      </a>
+    </div>
     <label
       for="themeToggle_mobile"
       class="themeToggle st-sunMoonThemeToggleBtn"
